@@ -17,7 +17,7 @@ namespace Muhasebe
 {
     public partial class MainForm : Form
     {
-        internal static SQLiteConnection connection;
+        public static SQLiteConnection connection;
         public MainForm()
         {
             InitializeComponent();
