@@ -43,16 +43,17 @@
             this.pbProductImage.Image = ((System.Drawing.Image)(resources.GetObject("pbProductImage.Image")));
             this.pbProductImage.Location = new System.Drawing.Point(67, 78);
             this.pbProductImage.Name = "pbProductImage";
-            this.pbProductImage.Size = new System.Drawing.Size(137, 169);
-            this.pbProductImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbProductImage.Size = new System.Drawing.Size(152, 186);
+            this.pbProductImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbProductImage.TabIndex = 0;
             this.pbProductImage.TabStop = false;
+            this.pbProductImage.Click += new System.EventHandler(this.pbProductImage_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(238, 122);
+            this.label1.Location = new System.Drawing.Point(263, 122);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 22);
             this.label1.TabIndex = 3;
@@ -62,7 +63,7 @@
             // tbtProductCode
             // 
             this.tbtProductCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tbtProductCode.Location = new System.Drawing.Point(234, 147);
+            this.tbtProductCode.Location = new System.Drawing.Point(259, 147);
             this.tbtProductCode.Name = "tbtProductCode";
             this.tbtProductCode.Size = new System.Drawing.Size(100, 26);
             this.tbtProductCode.TabIndex = 1;

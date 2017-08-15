@@ -42,19 +42,19 @@ namespace Muhasebe
         public void createDbTables()
         {
             connection.Open();
-            SQLiteCommand CREATE_PRODUCT_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(proCode INTEGER UNIQUE, description TEXT, image BLOB)", connection);
+            SQLiteCommand CREATE_PRODUCT_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(proCode TEXT PRIMARY KEY, description TEXT, image BLOB, adet INTEGER)", connection);
             CREATE_PRODUCT_TABLE.ExecuteNonQuery();
             CREATE_PRODUCT_TABLE.Dispose();
 
-            SQLiteCommand CREATE_SALE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_sale(id INTEGER UNIQUE, proCode INTEGER, date DATETIME, sellerId INTEGER, price FLOAT, type INTEGER)", connection);
+            SQLiteCommand CREATE_SALE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_sale(id INTEGER PRIMARY KEY, proCode INTEGER, amount INTEGER, date LONG, sellerId INTEGER, price FLOAT, type INTEGER)", connection);
             CREATE_SALE_TABLE.ExecuteNonQuery();
             CREATE_SALE_TABLE.Dispose();
 
-            SQLiteCommand CREATE_PURCHASE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_urchase(id INTEGER UNIQUE, proCode INTEGER, date DATETIME, sellerId INTEGER)", connection);
+            SQLiteCommand CREATE_PURCHASE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_purchase(id INTEGER PRIMARY KEY, proCode INTEGER, amount INTEGER, date LONG, sellerId INTEGER, price FLOAT, type INTEGER)", connection);
             CREATE_PURCHASE_TABLE.ExecuteNonQuery();
             CREATE_PURCHASE_TABLE.Dispose();
 
-            SQLiteCommand CREATE_EMPLOYEE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(id INTEGER UNIQUE, name TEXT, surName TEXT)", connection);
+            SQLiteCommand CREATE_EMPLOYEE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_employee(id INTEGER PRIMARY KEY, name TEXT, surName TEXT)", connection);
             CREATE_EMPLOYEE_TABLE.ExecuteNonQuery();
             CREATE_EMPLOYEE_TABLE.Dispose();
             connection.Close();
@@ -239,6 +239,18 @@ namespace Muhasebe
             JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
 
             return json;
+        }
+
+        private void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            AddProductForm addProductForm = new AddProductForm();
+            addProductForm.ShowDialog();
+        }
+
+        private void btnPurchaseProduct_Click(object sender, EventArgs e)
+        {
+            PurchaseForm purchaseForm = new PurchaseForm();
+            purchaseForm.ShowDialog();
         }
     }
 }
