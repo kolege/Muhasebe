@@ -14,9 +14,12 @@ namespace Muhasebe
     public partial class PurchaseForm : Form
     {
         SQLiteConnection connection = MainForm.connection;
+        int paymentType;
         public PurchaseForm()
         {
             InitializeComponent();
+            paymentType = Utils.paymentTypeTL;
+            chbTL.Checked = true;
         }
 
         private void PurchaseForm_Load(object sender, EventArgs e)
@@ -77,6 +80,49 @@ namespace Muhasebe
             }
         }
 
+        private void btnPurchase_Click(object sender, EventArgs e)
+        {
+            if(!string.IsNullOrWhiteSpace(tbtAmount.Text) && !string.IsNullOrWhiteSpace(tbtPrice.Text)
+                && cbProducts.SelectedItem!=null && cbEmployee.SelectedItem != null)
+            {
+                connection.Open();
+                try
+                {
+                    SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_purchase(id,proCode,amount,date,sellerId,price,type) values"
+                        + "(NULL,@proCode,@amount,@date,@sellerId,@price,@type)", connection);
+                    query.Parameters.AddWithValue("@proCode", cbProducts.SelectedText);
+                    query.Parameters.AddWithValue("@amount", tbtAmount.Text);
+                    query.Parameters.AddWithValue("@date", getDate());
+                    query.Parameters.AddWithValue("@sellerId", cbEmployee.SelectedText);
+                    query.Parameters.AddWithValue("@price", tbtPrice.Text);
+                    query.Parameters.AddWithValue("@type", paymentType);
+                    query.ExecuteNonQuery();
+                    query.Dispose();
+                    connection.Close();
+                    this.Close();
+                }
+                catch (SQLiteException ex)
+                {
+                    connection.Close();
+                    Console.WriteLine(ex.ToString());
+                    MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                }
+            }
+        }
+
+        private void chbUSD_Click(object sender, EventArgs e)
+        {
+            chbUSD.Checked = true;
+            chbTL.Checked = false;
+            paymentType = Utils.paymentTypeUSD;
+        }
+
+        private void chbTL_Click(object sender, EventArgs e)
+        {
+            chbTL.Checked = true;
+            chbUSD.Checked = false;
+            paymentType = Utils.paymentTypeTL;
+        }
     }
 }
