@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Muhasebe
@@ -15,6 +11,8 @@ namespace Muhasebe
     {
         SQLiteConnection connection = MainForm.connection;
         int paymentType;
+        List<int> listEmployees=new List<int>();
+
         public PurchaseForm()
         {
             InitializeComponent();
@@ -52,6 +50,7 @@ namespace Muhasebe
             SQLiteDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
+                listEmployees.Add(int.Parse(reader["id"].ToString()));
                 cbEmployee.Items.Add(reader["name"].ToString()+" "+reader["surName"].ToString());
             }
             connection.Close();
@@ -90,13 +89,16 @@ namespace Muhasebe
                 {
                     SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_purchase(id,proCode,amount,date,sellerId,price,type) values"
                         + "(NULL,@proCode,@amount,@date,@sellerId,@price,@type)", connection);
-                    query.Parameters.AddWithValue("@proCode", cbProducts.SelectedText);
+                    query.Parameters.AddWithValue("@proCode", cbProducts.SelectedItem);
                     query.Parameters.AddWithValue("@amount", tbtAmount.Text);
                     query.Parameters.AddWithValue("@date", getDate());
-                    query.Parameters.AddWithValue("@sellerId", cbEmployee.SelectedText);
+                    query.Parameters.AddWithValue("@sellerId", listEmployees[cbEmployee.SelectedIndex]);
                     query.Parameters.AddWithValue("@price", tbtPrice.Text);
                     query.Parameters.AddWithValue("@type", paymentType);
                     query.ExecuteNonQuery();
+                    query.Dispose();
+                    SQLiteCommand queryIncrease = new SQLiteCommand("UPDATE mhsb_product SET adet = adet + "+tbtAmount.Text+" WHERE proCode='"+ cbProducts.SelectedItem+"'", connection);
+                    queryIncrease.ExecuteNonQuery();
                     query.Dispose();
                     connection.Close();
                     this.Close();
@@ -106,8 +108,11 @@ namespace Muhasebe
                     connection.Close();
                     Console.WriteLine(ex.ToString());
                     MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
                 }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen tüm verileri doldurduğunuzdan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

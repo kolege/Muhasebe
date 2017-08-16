@@ -70,6 +70,7 @@
             this.elemanEkleToolStripMenuItem.Name = "elemanEkleToolStripMenuItem";
             this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.elemanEkleToolStripMenuItem.Text = "Eleman Ekle";
+            this.elemanEkleToolStripMenuItem.Click += new System.EventHandler(this.elemanEkleToolStripMenuItem_Click);
             // 
             // elemanBilançosuToolStripMenuItem
             // 
@@ -92,7 +93,7 @@
             this.genelRaporToolStripMenuItem,
             this.ürünRaporuToolStripMenuItem});
             this.görüntüleToolStripMenuItem.Name = "görüntüleToolStripMenuItem";
-            this.görüntüleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.görüntüleToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.görüntüleToolStripMenuItem.Text = "Haftalık";
             // 
             // genelRaporToolStripMenuItem
@@ -113,7 +114,7 @@
             this.ürünRaporuToolStripMenuItem1,
             this.belirliÜrünRaporuToolStripMenuItem});
             this.aylıkToolStripMenuItem.Name = "aylıkToolStripMenuItem";
-            this.aylıkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aylıkToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.aylıkToolStripMenuItem.Text = "Aylık ";
             // 
             // ürünRaporuToolStripMenuItem1
