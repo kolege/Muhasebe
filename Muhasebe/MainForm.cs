@@ -258,5 +258,11 @@ namespace Muhasebe
             AddEmployeeForm addEmployee = new AddEmployeeForm();
             addEmployee.Show();
         }
+
+        private void btnSaleProduct_Click(object sender, EventArgs e)
+        {
+            SaleForm saleForm = new SaleForm();
+            saleForm.Show();
+        }
     }
 }

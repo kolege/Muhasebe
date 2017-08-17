@@ -56,7 +56,7 @@
             this.chbUSD.Margin = new System.Windows.Forms.Padding(2);
             this.chbUSD.Name = "chbUSD";
             this.chbUSD.Size = new System.Drawing.Size(77, 22);
-            this.chbUSD.TabIndex = 28;
+            this.chbUSD.TabIndex = 6;
             this.chbUSD.Text = "USD($)";
             this.chbUSD.UseVisualStyleBackColor = true;
             this.chbUSD.CheckedChanged += new System.EventHandler(this.chbUSD_Click);
@@ -64,12 +64,14 @@
             // chbTL
             // 
             this.chbTL.AutoSize = true;
+            this.chbTL.Checked = true;
+            this.chbTL.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbTL.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.chbTL.Location = new System.Drawing.Point(491, 191);
             this.chbTL.Margin = new System.Windows.Forms.Padding(2);
             this.chbTL.Name = "chbTL";
             this.chbTL.Size = new System.Drawing.Size(62, 22);
-            this.chbTL.TabIndex = 27;
+            this.chbTL.TabIndex = 5;
             this.chbTL.Text = "TL(₺)";
             this.chbTL.UseVisualStyleBackColor = true;
             this.chbTL.CheckedChanged += new System.EventHandler(this.chbTL_Click);
@@ -82,9 +84,10 @@
             this.btnPurchase.Margin = new System.Windows.Forms.Padding(2);
             this.btnPurchase.Name = "btnPurchase";
             this.btnPurchase.Size = new System.Drawing.Size(238, 56);
-            this.btnPurchase.TabIndex = 26;
-            this.btnPurchase.Text = "Stoğa Ekle";
+            this.btnPurchase.TabIndex = 8;
+            this.btnPurchase.Text = "Satışı Tamamla";
             this.btnPurchase.UseVisualStyleBackColor = false;
+            this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
             // 
             // label5
             // 
@@ -105,7 +108,8 @@
             this.tbtPrice.Multiline = true;
             this.tbtPrice.Name = "tbtPrice";
             this.tbtPrice.Size = new System.Drawing.Size(136, 63);
-            this.tbtPrice.TabIndex = 24;
+            this.tbtPrice.TabIndex = 4;
+            this.tbtPrice.TextChanged += new System.EventHandler(this.tbtCheckInput);
             // 
             // label4
             // 
@@ -126,7 +130,8 @@
             this.tbtAmount.Multiline = true;
             this.tbtAmount.Name = "tbtAmount";
             this.tbtAmount.Size = new System.Drawing.Size(136, 63);
-            this.tbtAmount.TabIndex = 22;
+            this.tbtAmount.TabIndex = 3;
+            this.tbtAmount.TextChanged += new System.EventHandler(this.tbtCheckInput);
             // 
             // label3
             // 
@@ -147,7 +152,7 @@
             this.dtpTime.Name = "dtpTime";
             this.dtpTime.ShowUpDown = true;
             this.dtpTime.Size = new System.Drawing.Size(88, 23);
-            this.dtpTime.TabIndex = 20;
+            this.dtpTime.TabIndex = 10;
             // 
             // dtpDate
             // 
@@ -157,7 +162,7 @@
             this.dtpDate.Margin = new System.Windows.Forms.Padding(2);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(92, 23);
-            this.dtpDate.TabIndex = 19;
+            this.dtpDate.TabIndex = 9;
             // 
             // label2
             // 
@@ -175,7 +180,7 @@
             this.cbEmployee.Location = new System.Drawing.Point(608, 69);
             this.cbEmployee.Name = "cbEmployee";
             this.cbEmployee.Size = new System.Drawing.Size(121, 21);
-            this.cbEmployee.TabIndex = 17;
+            this.cbEmployee.TabIndex = 2;
             // 
             // label1
             // 
@@ -193,7 +198,7 @@
             this.cbProducts.Location = new System.Drawing.Point(102, 65);
             this.cbProducts.Name = "cbProducts";
             this.cbProducts.Size = new System.Drawing.Size(133, 21);
-            this.cbProducts.TabIndex = 15;
+            this.cbProducts.TabIndex = 1;
             this.cbProducts.SelectedIndexChanged += new System.EventHandler(this.cbProducts_SelectedIndexChanged);
             // 
             // label6
@@ -215,7 +220,7 @@
             this.tbtCustomerName.Multiline = true;
             this.tbtCustomerName.Name = "tbtCustomerName";
             this.tbtCustomerName.Size = new System.Drawing.Size(136, 58);
-            this.tbtCustomerName.TabIndex = 29;
+            this.tbtCustomerName.TabIndex = 7;
             // 
             // lblStockAmount
             // 
@@ -227,7 +232,6 @@
             this.lblStockAmount.Name = "lblStockAmount";
             this.lblStockAmount.Size = new System.Drawing.Size(79, 32);
             this.lblStockAmount.TabIndex = 33;
-            this.lblStockAmount.Text = "Adet";
             this.lblStockAmount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label8
