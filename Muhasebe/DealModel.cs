@@ -14,6 +14,7 @@ namespace Muhasebe
         public long amount { get; set; }
         public string customer { get; set; }
         public int sellerID { get; set; }
+        public int type { get; set; }
 
         public DealModel(int proCode)
         {

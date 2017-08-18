@@ -243,8 +243,7 @@ namespace Muhasebe
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
-            AddProductForm addProductForm = new AddProductForm();
-            addProductForm.ShowDialog();
+            
         }
 
         private void btnPurchaseProduct_Click(object sender, EventArgs e)
@@ -263,6 +262,12 @@ namespace Muhasebe
         {
             SaleForm saleForm = new SaleForm();
             saleForm.Show();
+        }
+
+        private void ürünEkleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddProductForm addProductForm = new AddProductForm();
+            addProductForm.ShowDialog();
         }
     }
 }

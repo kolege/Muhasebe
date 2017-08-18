@@ -31,29 +31,29 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.elemenaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.elemanEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.elemanBilançosuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAddProduct = new System.Windows.Forms.Button();
             this.btnSaleProduct = new System.Windows.Forms.Button();
             this.btnPurchaseProduct = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
+            this.ürünnlerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ürünEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.elemenaToolStripMenuItem});
+            this.elemenaToolStripMenuItem,
+            this.ürünnlerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(458, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(525, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // elemenaToolStripMenuItem
             // 
             this.elemenaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.elemanEkleToolStripMenuItem,
-            this.elemanBilançosuToolStripMenuItem});
+            this.elemanEkleToolStripMenuItem});
             this.elemenaToolStripMenuItem.Name = "elemenaToolStripMenuItem";
             this.elemenaToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.elemenaToolStripMenuItem.Text = "Elemanlar";
@@ -61,31 +61,14 @@
             // elemanEkleToolStripMenuItem
             // 
             this.elemanEkleToolStripMenuItem.Name = "elemanEkleToolStripMenuItem";
-            this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.elemanEkleToolStripMenuItem.Text = "Eleman Ekle";
             this.elemanEkleToolStripMenuItem.Click += new System.EventHandler(this.elemanEkleToolStripMenuItem_Click);
-            // 
-            // elemanBilançosuToolStripMenuItem
-            // 
-            this.elemanBilançosuToolStripMenuItem.Name = "elemanBilançosuToolStripMenuItem";
-            this.elemanBilançosuToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.elemanBilançosuToolStripMenuItem.Text = "Eleman Bilançosu";
-            // 
-            // btnAddProduct
-            // 
-            this.btnAddProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnAddProduct.Location = new System.Drawing.Point(258, 137);
-            this.btnAddProduct.Name = "btnAddProduct";
-            this.btnAddProduct.Size = new System.Drawing.Size(97, 40);
-            this.btnAddProduct.TabIndex = 1;
-            this.btnAddProduct.Text = "Ürün Ekle";
-            this.btnAddProduct.UseVisualStyleBackColor = true;
-            this.btnAddProduct.Click += new System.EventHandler(this.btnAddProduct_Click);
             // 
             // btnSaleProduct
             // 
             this.btnSaleProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnSaleProduct.Location = new System.Drawing.Point(242, 71);
+            this.btnSaleProduct.Location = new System.Drawing.Point(73, 139);
             this.btnSaleProduct.Name = "btnSaleProduct";
             this.btnSaleProduct.Size = new System.Drawing.Size(137, 40);
             this.btnSaleProduct.TabIndex = 2;
@@ -107,23 +90,37 @@
             // btnReports
             // 
             this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnReports.Location = new System.Drawing.Point(96, 137);
+            this.btnReports.Location = new System.Drawing.Point(92, 198);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new System.Drawing.Size(97, 40);
             this.btnReports.TabIndex = 4;
             this.btnReports.Text = "Raporlar";
             this.btnReports.UseVisualStyleBackColor = true;
             // 
+            // ürünnlerToolStripMenuItem
+            // 
+            this.ürünnlerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ürünEkleToolStripMenuItem});
+            this.ürünnlerToolStripMenuItem.Name = "ürünnlerToolStripMenuItem";
+            this.ürünnlerToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.ürünnlerToolStripMenuItem.Text = "Ürünler";
+            // 
+            // ürünEkleToolStripMenuItem
+            // 
+            this.ürünEkleToolStripMenuItem.Name = "ürünEkleToolStripMenuItem";
+            this.ürünEkleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ürünEkleToolStripMenuItem.Text = "Ürün Ekle";
+            this.ürünEkleToolStripMenuItem.Click += new System.EventHandler(this.ürünEkleToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(458, 250);
+            this.ClientSize = new System.Drawing.Size(525, 516);
             this.Controls.Add(this.btnReports);
             this.Controls.Add(this.btnPurchaseProduct);
             this.Controls.Add(this.btnSaleProduct);
-            this.Controls.Add(this.btnAddProduct);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -143,11 +140,11 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem elemenaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem elemanEkleToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem elemanBilançosuToolStripMenuItem;
-        private System.Windows.Forms.Button btnAddProduct;
         private System.Windows.Forms.Button btnSaleProduct;
         private System.Windows.Forms.Button btnPurchaseProduct;
         private System.Windows.Forms.Button btnReports;
+        private System.Windows.Forms.ToolStripMenuItem ürünnlerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ürünEkleToolStripMenuItem;
     }
 }
 
