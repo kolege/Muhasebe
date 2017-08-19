@@ -21,15 +21,15 @@ namespace Muhasebe
         public MainForm()
         {
             InitializeComponent();
-            if (!File.Exists("KURS_Database.sqlite"))
+            if (!File.Exists("MHSB_Database.sqlite"))
             {
-                SQLiteConnection.CreateFile("KURS_Database.sqlite");
-                connection = new SQLiteConnection("Data Source=KURS_Database.sqlite;Version=3;");
+                SQLiteConnection.CreateFile("MHSB_Database.sqlite");
+                connection = new SQLiteConnection("Data Source=MHSB_Database.sqlite;Version=3;");
                 createDbTables();
             }
             else
             {
-                connection = new SQLiteConnection("Data Source=KURS_Database.sqlite;Version=3;");
+                connection = new SQLiteConnection("Data Source=MHSB_Database.sqlite;Version=3;");
             }
         }
 
@@ -42,15 +42,15 @@ namespace Muhasebe
         public void createDbTables()
         {
             connection.Open();
-            SQLiteCommand CREATE_PRODUCT_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(proCode TEXT NOT NULL PRIMARY KEY, description TEXT, image BLOB, adet INTEGER)", connection);
+            SQLiteCommand CREATE_PRODUCT_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(proCode TEXT NOT NULL PRIMARY KEY, description TEXT, image BLOB, adet TEXT)", connection);
             CREATE_PRODUCT_TABLE.ExecuteNonQuery();
             CREATE_PRODUCT_TABLE.Dispose();
 
-            SQLiteCommand CREATE_SALE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_sale(id INTEGER NOT NULL PRIMARY KEY, proCode INTEGER, date LONG, sellerId INTEGER, buyer TEXT, amount INTEGER, price FLOAT, type INTEGER)", connection);
+            SQLiteCommand CREATE_SALE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_sale(id INTEGER NOT NULL PRIMARY KEY, proCode TEXT, date LONG, sellerId INTEGER, buyer TEXT, amount TEXT, price TEXT, type INTEGER)", connection);
             CREATE_SALE_TABLE.ExecuteNonQuery();
             CREATE_SALE_TABLE.Dispose();
 
-            SQLiteCommand CREATE_PURCHASE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_purchase(id INTEGER NOT NULL PRIMARY KEY, proCode INTEGER, amount INTEGER, date LONG, sellerId INTEGER, price FLOAT, type INTEGER)", connection);
+            SQLiteCommand CREATE_PURCHASE_TABLE = new SQLiteCommand("CREATE TABLE mhsb_purchase(id INTEGER NOT NULL PRIMARY KEY, proCode TEXT, amount TEXT, date LONG, sellerId INTEGER, price TEXT, type INTEGER)", connection);
             CREATE_PURCHASE_TABLE.ExecuteNonQuery();
             CREATE_PURCHASE_TABLE.Dispose();
 

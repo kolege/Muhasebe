@@ -37,6 +37,8 @@ namespace Muhasebe
 
         private void fillCbProducts()
         {
+            listStocks.Clear();
+            cbProducts.Items.Clear();
             connection.Open();
             SQLiteCommand query = new SQLiteCommand("Select proCode, adet From mhsb_product", connection);
             query.ExecuteNonQuery();
@@ -54,6 +56,8 @@ namespace Muhasebe
 
         public void fillCbEmployee()
         {
+            listEmployees.Clear();
+            cbProducts.Items.Clear();
             connection.Open();
             SQLiteCommand query = new SQLiteCommand("Select * From mhsb_employee", connection);
             query.ExecuteNonQuery();

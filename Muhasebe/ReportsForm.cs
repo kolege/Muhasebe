@@ -16,6 +16,7 @@ namespace Muhasebe
 
         SQLiteConnection connection = MainForm.connection;
         List<int> listEmployees = new List<int>();
+        List<int> listStocks = new List<int>();
         List<DealModel> listDeals;
 
         public ReportsForm()
@@ -26,13 +27,16 @@ namespace Muhasebe
 
         private void fillCbProducts()
         {
+            listStocks.Clear();
+            cbProducts.Items.Clear();
             connection.Open();
-            SQLiteCommand query = new SQLiteCommand("Select proCode From mhsb_product", connection);
+            SQLiteCommand query = new SQLiteCommand("Select proCode, adet From mhsb_product", connection);
             query.ExecuteNonQuery();
             SQLiteDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
                 cbProducts.Items.Add(reader["proCode"].ToString());
+                listStocks.Add(int.Parse(reader["adet"].ToString()));
             }
             connection.Close();
             cbProducts.DropDownStyle = ComboBoxStyle.DropDown;
@@ -42,6 +46,8 @@ namespace Muhasebe
 
         public void fillCbEmployee()
         {
+            listEmployees.Clear();
+            cbEmployee.Items.Clear();
             connection.Open();
             SQLiteCommand query = new SQLiteCommand("Select * From mhsb_employee", connection);
             query.ExecuteNonQuery();
@@ -67,9 +73,9 @@ namespace Muhasebe
             lvReport.Columns.Add("Miktar", 100, HorizontalAlignment.Left);
             lvReport.Columns.Add("Fiyat", 100, HorizontalAlignment.Left);
             lvReport.Columns.Add("Birim", 100, HorizontalAlignment.Left);
-            lvReport.Columns.Add("Satış Elemanı", 100, HorizontalAlignment.Left);
+            lvReport.Columns.Add("Satış Elemanı", 140, HorizontalAlignment.Left);
             if (chbSale.Checked)
-                lvReport.Columns.Add("Müşteri", 100, HorizontalAlignment.Left);
+                lvReport.Columns.Add("Müşteri", 140, HorizontalAlignment.Left);
             for(int i=0; i < listDeals.Count; i++)
             {
                 DealModel deal = listDeals[i];
@@ -106,10 +112,10 @@ namespace Muhasebe
                 queryString = "Select * From mhsb_purchase ";
             else
                 queryString = "Select * From mhsb_sale";
-            if (cbProducts.SelectedIndex != -1 && cbEmployee.SelectedIndex != -1)
+            if (cbProducts.SelectedIndex != -1 || cbEmployee.SelectedIndex != -1)
                 queryString += " WHERE ";
             if (cbProducts.SelectedIndex != -1)
-                queryString += "proCode LIKE '" + cbProducts.SelectedItem + "'";
+                queryString += "proCode = '" + cbProducts.SelectedItem + "'";
             if (cbProducts.SelectedIndex != -1 && cbEmployee.SelectedIndex != -1)
                 queryString += " and ";
             if (cbEmployee.SelectedIndex != -1)
