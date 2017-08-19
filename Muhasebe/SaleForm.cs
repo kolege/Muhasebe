@@ -103,7 +103,7 @@ namespace Muhasebe
                 }
             }catch(Exception error)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(error.ToString());
             }
         }
 
@@ -127,7 +127,7 @@ namespace Muhasebe
                     query.Parameters.AddWithValue("@proCode", cbProducts.SelectedItem);
                     query.Parameters.AddWithValue("@date", getDate());
                     query.Parameters.AddWithValue("@sellerId", listEmployees[cbEmployee.SelectedIndex]);
-                    query.Parameters.AddWithValue("@buyer", tbtCustomerName);
+                    query.Parameters.AddWithValue("@buyer", tbtCustomerName.Text);
                     query.Parameters.AddWithValue("@amount", tbtAmount.Text);
                     query.Parameters.AddWithValue("@price", tbtPrice.Text);
                     query.Parameters.AddWithValue("@type", paymentType);

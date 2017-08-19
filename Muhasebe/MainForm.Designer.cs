@@ -31,11 +31,11 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.elemenaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.elemanEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ürünnlerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ürünEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSaleProduct = new System.Windows.Forms.Button();
             this.btnPurchaseProduct = new System.Windows.Forms.Button();
             this.btnReports = new System.Windows.Forms.Button();
-            this.ürünnlerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ürünEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,9 +61,24 @@
             // elemanEkleToolStripMenuItem
             // 
             this.elemanEkleToolStripMenuItem.Name = "elemanEkleToolStripMenuItem";
-            this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.elemanEkleToolStripMenuItem.Text = "Eleman Ekle";
             this.elemanEkleToolStripMenuItem.Click += new System.EventHandler(this.elemanEkleToolStripMenuItem_Click);
+            // 
+            // ürünnlerToolStripMenuItem
+            // 
+            this.ürünnlerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ürünEkleToolStripMenuItem});
+            this.ürünnlerToolStripMenuItem.Name = "ürünnlerToolStripMenuItem";
+            this.ürünnlerToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.ürünnlerToolStripMenuItem.Text = "Ürünler";
+            // 
+            // ürünEkleToolStripMenuItem
+            // 
+            this.ürünEkleToolStripMenuItem.Name = "ürünEkleToolStripMenuItem";
+            this.ürünEkleToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.ürünEkleToolStripMenuItem.Text = "Ürün Ekle";
+            this.ürünEkleToolStripMenuItem.Click += new System.EventHandler(this.ürünEkleToolStripMenuItem_Click);
             // 
             // btnSaleProduct
             // 
@@ -96,21 +111,7 @@
             this.btnReports.TabIndex = 4;
             this.btnReports.Text = "Raporlar";
             this.btnReports.UseVisualStyleBackColor = true;
-            // 
-            // ürünnlerToolStripMenuItem
-            // 
-            this.ürünnlerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ürünEkleToolStripMenuItem});
-            this.ürünnlerToolStripMenuItem.Name = "ürünnlerToolStripMenuItem";
-            this.ürünnlerToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-            this.ürünnlerToolStripMenuItem.Text = "Ürünler";
-            // 
-            // ürünEkleToolStripMenuItem
-            // 
-            this.ürünEkleToolStripMenuItem.Name = "ürünEkleToolStripMenuItem";
-            this.ürünEkleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.ürünEkleToolStripMenuItem.Text = "Ürün Ekle";
-            this.ürünEkleToolStripMenuItem.Click += new System.EventHandler(this.ürünEkleToolStripMenuItem_Click);
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // MainForm
             // 

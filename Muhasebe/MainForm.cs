@@ -269,5 +269,11 @@ namespace Muhasebe
             AddProductForm addProductForm = new AddProductForm();
             addProductForm.ShowDialog();
         }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            ReportsForm reportsForm = new ReportsForm();
+            reportsForm.Show();
+        }
     }
 }

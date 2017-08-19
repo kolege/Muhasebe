@@ -8,17 +8,19 @@ namespace Muhasebe
 {
     class DealModel
     {
-        public int proCode { get; set; }
+        public int id { get; set; }
+        public string proCode { get; set; }
         public long date { get; set; }
         public float price { get; set; }
         public long amount { get; set; }
         public string customer { get; set; }
         public int sellerID { get; set; }
         public int type { get; set; }
+        public bool isSale { get; set; }
 
-        public DealModel(int proCode)
+        public DealModel(int id)
         {
-            this.proCode = proCode;
+            this.id = id;
         }
 
     }
