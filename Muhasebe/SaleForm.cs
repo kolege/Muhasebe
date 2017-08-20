@@ -103,7 +103,7 @@ namespace Muhasebe
                 if (tbt == tbtAmount && int.Parse(tbtAmount.Text)>int.Parse(lblStockAmount.Text))
                 {
                     MessageBox.Show("Stoklarımızdaki üründen fazlasını satamazsınız.");
-                    lblStockAmount.Text = "";
+                    tbtAmount.Text = "";
                 }
             }catch(Exception error)
             {

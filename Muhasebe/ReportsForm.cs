@@ -16,27 +16,33 @@ namespace Muhasebe
 
         SQLiteConnection connection = MainForm.connection;
         List<int> listEmployees = new List<int>();
-        List<int> listStocks = new List<int>();
+        List<ProductModel> listProducts = new List<ProductModel>();
         List<DealModel> listDeals;
+        long totalPriceTL=0, totalPriceUSD=0, totalAmountUSD=0, totalAmountTL=0;
 
         public ReportsForm()
         {
             InitializeComponent();
             listDeals = new List<DealModel>();
+            dtpDate.Visible = false;
         }
 
         private void fillCbProducts()
         {
-            listStocks.Clear();
+            listProducts.Clear();
             cbProducts.Items.Clear();
             connection.Open();
-            SQLiteCommand query = new SQLiteCommand("Select proCode, adet From mhsb_product", connection);
+            SQLiteCommand query = new SQLiteCommand("Select * From mhsb_product", connection);
             query.ExecuteNonQuery();
             SQLiteDataReader reader = query.ExecuteReader();
             while (reader.Read())
             {
-                cbProducts.Items.Add(reader["proCode"].ToString());
-                listStocks.Add(int.Parse(reader["adet"].ToString()));
+                ProductModel product = new ProductModel(reader["proCode"].ToString());
+                product.amount=long.Parse(reader["adet"].ToString());
+                product.image = (Bitmap)((new ImageConverter()).ConvertFrom(reader["image"]));
+                product.description = reader["description"].ToString();
+                cbProducts.Items.Add(product.proCode);
+                listProducts.Add(product);
             }
             connection.Close();
             cbProducts.DropDownStyle = ComboBoxStyle.DropDown;
@@ -65,6 +71,10 @@ namespace Muhasebe
 
         public void fillList()
         {
+            totalPriceUSD = 0;
+            totalPriceTL = 0;
+            totalAmountTL = 0;
+            totalAmountUSD = 0;
             lvReport.Clear();
             lvReport.View = View.Details;
             lvReport.FullRowSelect = true;
@@ -85,12 +95,25 @@ namespace Muhasebe
                 itemArrayLv[1] = UnixTimeStampToDateTime(deal.date).ToString();
                 itemArrayLv[2] = deal.amount.ToString();
                 itemArrayLv[3] = deal.price + "";
-                itemArrayLv[4] = deal.type + "";
+                if (deal.type == Utils.paymentTypeTL)
+                {
+                    itemArrayLv[4] = "TL";
+                    totalPriceTL += long.Parse(deal.price + "");
+                    totalAmountTL += deal.amount;
+                }
+                else
+                {
+                    itemArrayLv[4] = "USD";
+                    totalPriceUSD += long.Parse(deal.price + "");
+                    totalAmountUSD += deal.amount;
+                }
                 itemArrayLv[5] = deal.sellerID + "";
                 if (chbSale.Checked)
                     itemArrayLv[6] = deal.customer;
                 lviPayments = new ListViewItem(itemArrayLv);
                 lvReport.Items.Insert(lviPayments.IndentCount, lviPayments);
+                lblAmount.Text = totalAmountTL + " TL/" + totalAmountUSD + " USD";
+                lblPrice.Text = totalPriceTL + " TL/" + totalPriceUSD + " USD";
             }
 
         }
@@ -112,14 +135,20 @@ namespace Muhasebe
                 queryString = "Select * From mhsb_purchase ";
             else
                 queryString = "Select * From mhsb_sale";
-            if (cbProducts.SelectedIndex != -1 || cbEmployee.SelectedIndex != -1)
+            if (cbProducts.SelectedIndex != -1 || cbEmployee.SelectedIndex != -1 || chbDate.Checked)
                 queryString += " WHERE ";
             if (cbProducts.SelectedIndex != -1)
                 queryString += "proCode = '" + cbProducts.SelectedItem + "'";
-            if (cbProducts.SelectedIndex != -1 && cbEmployee.SelectedIndex != -1)
+            if (cbProducts.SelectedIndex != -1 && (cbEmployee.SelectedIndex != -1 || chbDate.Checked))
                 queryString += " and ";
             if (cbEmployee.SelectedIndex != -1)
                 queryString += "sellerId = '" + listEmployees[cbEmployee.SelectedIndex] + "'";
+            if ((cbProducts.SelectedIndex != -1 || cbEmployee.SelectedIndex != -1) && chbDate.Checked)
+                queryString += " and ";
+            if (chbDate.Checked)
+            {
+                queryString+=" date >= "+ getDate();
+            }
             SQLiteCommand query = new SQLiteCommand(queryString, connection);
             query.ExecuteNonQuery();
             SQLiteDataReader reader = query.ExecuteReader();
@@ -169,6 +198,28 @@ namespace Muhasebe
             DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
             return dtDateTime.AddHours(-3);
+        }
+
+        private void cbProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbProducts.SelectedIndex != -1)
+            {
+                pbProduct.Image = listProducts[cbProducts.SelectedIndex].image;
+            }
+        }
+
+        private void chbDate_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (dtpDate.Visible==true)
+                dtpDate.Visible = false;
+            else
+                dtpDate.Visible = true;
+        }
+
+        public long getDate()
+        {
+            DateTime date = dtpDate.Value.Date;
+            return (long)(date.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }
     }
 }
