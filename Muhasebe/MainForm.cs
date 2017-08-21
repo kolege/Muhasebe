@@ -18,6 +18,7 @@ namespace Muhasebe
     public partial class MainForm : Form
     {
         public static SQLiteConnection connection;
+        List<ProductModel> listProducts=new List<ProductModel>();
         public MainForm()
         {
             InitializeComponent();
@@ -274,6 +275,65 @@ namespace Muhasebe
         {
             ReportsForm reportsForm = new ReportsForm();
             reportsForm.Show();
+        }
+
+        public void fillList()
+        {
+            lvReport.Clear();
+            lvReport.View = View.Details;
+            lvReport.FullRowSelect = true;
+            lvReport.Columns.Add("Ürün Kodu", 100, HorizontalAlignment.Left);
+            lvReport.Columns.Add("Açıklama", 180, HorizontalAlignment.Left);
+            lvReport.Columns.Add("Miktar", 70, HorizontalAlignment.Left);
+            for (int i = 0; i < listProducts.Count; i++)
+            {
+                ProductModel pro = listProducts[i];
+                string[] itemArrayLv = new string[3];
+                ListViewItem lviPayments;
+                itemArrayLv[0] = pro.proCode;
+                itemArrayLv[1] = pro.description;
+                itemArrayLv[2] = pro.amount+"";
+                lviPayments = new ListViewItem(itemArrayLv);
+                lvReport.Items.Insert(lviPayments.IndentCount, lviPayments);
+            }
+
+        }
+
+        public void getProducts()
+        {
+            listProducts.Clear();
+            connection.Open();
+            String queryString;
+            queryString = "Select * From mhsb_product ";
+            
+            if (!string.IsNullOrWhiteSpace(tbtProCode.Text))
+                queryString += " WHERE proCode LIKE '"+tbtProCode.Text+"%'";
+
+            SQLiteCommand query = new SQLiteCommand(queryString, connection);
+            query.ExecuteNonQuery();
+            SQLiteDataReader reader = query.ExecuteReader();
+            while (reader.Read())
+            {
+                ProductModel product = new ProductModel(reader["proCode"].ToString());
+                product.description = reader["description"].ToString();
+                product.amount = long.Parse(reader["adet"].ToString());
+                product.image = (Bitmap)((new ImageConverter()).ConvertFrom(reader["image"]));
+                listProducts.Add(product);
+            }
+            reader.Close();
+            query.Dispose();
+            connection.Close();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            getProducts();
+            fillList();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MainForm_Load(null, null);
         }
     }
 }

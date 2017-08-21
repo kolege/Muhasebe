@@ -1,9 +1,12 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,16 +115,8 @@ namespace Muhasebe
                     itemArrayLv[6] = deal.customer;
                 lviPayments = new ListViewItem(itemArrayLv);
                 lvReport.Items.Insert(lviPayments.IndentCount, lviPayments);
-                lblAmount.Text = totalAmountTL + " TL/" + totalAmountUSD + " USD";
-                lblPrice.Text = totalPriceTL + " TL/" + totalPriceUSD + " USD";
             }
 
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            getDeals();
-            fillList();
         }
 
         public void getDeals()
@@ -221,5 +216,143 @@ namespace Muhasebe
             DateTime date = dtpDate.Value.Date;
             return (long)(date.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }
+
+        public void createBill()
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            path = path + @"\Çizelgeler";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            #region Font seç
+            BaseFont trArial = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, false);
+            iTextSharp.text.Font fontArial = new iTextSharp.text.Font(trArial, 10, iTextSharp.text.Font.NORMAL, BaseColor.DARK_GRAY);
+            iTextSharp.text.Font fontArialHeader = new iTextSharp.text.Font(trArial, 13, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            iTextSharp.text.Font fontArialTableHeader = new iTextSharp.text.Font(trArial, 11, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            iTextSharp.text.Font fontArialbold = new iTextSharp.text.Font(trArial, 9, iTextSharp.text.Font.BOLD, BaseColor.DARK_GRAY);
+            iTextSharp.text.Font fontArialboldgeneral = new iTextSharp.text.Font(trArial, 10, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            #endregion
+
+            iTextSharp.text.Document pdfFile = new iTextSharp.text.Document();
+            try
+            {
+                PdfWriter.GetInstance(pdfFile, new FileStream(path + "\\" + cbProducts.SelectedItem + ".pdf", FileMode.Create));
+                pdfFile.Open();
+
+                #region Fatura oluşturan bilgileri
+                pdfFile.AddCreator("Tamer Collection"); //Oluşturan kişinin isminin eklenmesi
+                pdfFile.AddCreationDate();//Oluşturulma tarihinin eklenmesi
+                pdfFile.AddAuthor("ITrack v.1.0"); //Yazarın isiminin eklenmesi
+                pdfFile.AddHeader("Başlık", "Stok Kontrol");
+                pdfFile.AddTitle(cbProducts.SelectedItem + "Stok Çizelgesi"); //Başlık ve title eklenmesi
+                #endregion
+
+                PdfPTable pdfTableHeader = new PdfPTable(3);
+                pdfTableHeader.TotalWidth = 500f;
+                pdfTableHeader.LockedWidth = true;
+                pdfTableHeader.DefaultCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
+
+                string header1 = "";
+                if (cbProducts.SelectedIndex != -1)
+                    header1 = "Ürün Kodu : "+cbProducts.SelectedItem.ToString();
+                if (cbEmployee.SelectedIndex != -1)
+                    header1 += "\nSatış Elemanı : " + cbEmployee.SelectedItem.ToString();
+                if (chbDate.Checked)
+                    header1 += "\n"+dtpDate.Value.ToShortDateString()+" Tarihinden İtibaren";
+                PdfPCell cellheader1 = new PdfPCell(new Phrase(header1, fontArial));
+                cellheader1.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                cellheader1.VerticalAlignment = PdfPCell.ALIGN_BOTTOM;
+                cellheader1.FixedHeight = 60f;
+                cellheader1.Border = 0;
+                pdfTableHeader.AddCell(cellheader1);
+
+                PdfPCell cellheader2 = new PdfPCell(new Phrase("Tamer Collection Stok Kontrol", fontArialHeader));
+                cellheader2.HorizontalAlignment = PdfPCell.ALIGN_TOP;
+                cellheader2.VerticalAlignment = PdfPCell.ALIGN_MIDDLE;
+                cellheader2.FixedHeight = 60f;
+                cellheader2.Border = 0;
+                pdfTableHeader.AddCell(cellheader2);
+
+
+                PdfPCell cellheader3 = new PdfPCell(new Phrase(DateTime.Now.ToShortDateString(), fontArial));
+                cellheader3.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+                cellheader3.VerticalAlignment = PdfPCell.ALIGN_BOTTOM;
+                cellheader3.FixedHeight = 60f;
+                cellheader3.Border = 0;
+                pdfTableHeader.AddCell(cellheader3);
+
+
+                Phrase p = new Phrase("\n");
+
+                #region Tabloyu Oluştur
+                PdfPTable pdfTable = new PdfPTable(3);
+                pdfTable.TotalWidth = 500f;
+                pdfTable.LockedWidth = true;
+                pdfTable.DefaultCell.Padding = 5;
+                pdfTable.DefaultCell.BorderColor = BaseColor.GRAY;
+
+                pdfTable.AddCell(new Phrase("Tarih", fontArialTableHeader));
+                pdfTable.AddCell(new Phrase("Adet", fontArialTableHeader));
+                pdfTable.AddCell(new Phrase("Fiyat", fontArialTableHeader));
+
+                for (int i = 0; i < listDeals.Count; i++)
+                {
+                    DealModel dm = listDeals.ElementAt(i);
+                    pdfTable.AddCell(new Phrase(UnixTimeStampToDateTime(dm.date).ToString(), fontArial));
+                    pdfTable.AddCell(new Phrase(dm.amount + "", fontArial));
+                    pdfTable.AddCell(new Phrase(dm.price+"", fontArial));
+                }
+
+                pdfTable.AddCell(new Phrase("GENEL TOPLAM", fontArialboldgeneral));
+                pdfTable.AddCell(new Phrase(lblAmount.Text, fontArialboldgeneral));
+                pdfTable.AddCell(new Phrase(lblPrice.Text, fontArialboldgeneral));
+
+                #endregion
+
+                PdfPTable pdfTableBottom = new PdfPTable(1);
+                pdfTableHeader.TotalWidth = 500f;
+                pdfTableHeader.LockedWidth = true;
+                pdfTableHeader.DefaultCell.Border = iTextSharp.text.Rectangle.NO_BORDER;
+
+                PdfPCell cellbottom3 = new PdfPCell(new Phrase("Imza", fontArialHeader));
+                cellbottom3.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+                cellbottom3.VerticalAlignment = PdfPCell.ALIGN_BOTTOM;
+                cellbottom3.FixedHeight = 60f;
+                cellbottom3.Border = 0;
+                pdfTableBottom.AddCell(cellbottom3);
+
+                #region Pdfe yaz ve dosyayı kapat
+                if (pdfFile.IsOpen() == false) pdfFile.Open();
+                pdfFile.Add(pdfTableHeader);
+                pdfFile.Add(p);
+                pdfFile.Add(pdfTable);
+                pdfFile.Add(p);
+                pdfFile.Add(pdfTableBottom);
+                pdfFile.Close();
+                #endregion
+                System.Diagnostics.Process.Start("explorer.exe", path + "\\" + cbProducts.Text + ".pdf");
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Fatura şuan kullanımda olduğu için değiştirilemşyor.Lütfen kullanıma son verip tekrar deneyiniz.");
+            }
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            getDeals();
+            fillList();
+            lblAmount.Text = totalAmountTL + "\n" + totalAmountUSD;
+            lblPrice.Text = totalPriceTL + " TL\n" + totalPriceUSD + " USD";
+        }
+
+        private void btnCreateReport_Click(object sender, EventArgs e)
+        {
+            createBill();
+        }
+
     }
 }
