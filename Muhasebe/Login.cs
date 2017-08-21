@@ -58,8 +58,7 @@ namespace Muhasebe
                 lblError.Show();
                 lblError.Text = json["response"]["message"].ToString();
             }
-        }
-       
+        } 
     }
 
 

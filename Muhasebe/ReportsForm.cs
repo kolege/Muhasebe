@@ -110,7 +110,7 @@ namespace Muhasebe
                     totalPriceUSD += long.Parse(deal.price + "");
                     totalAmountUSD += deal.amount;
                 }
-                itemArrayLv[5] = deal.sellerID + "";
+                itemArrayLv[5] = getSellerName(deal.sellerID);
                 if (chbSale.Checked)
                     itemArrayLv[6] = deal.customer;
                 lviPayments = new ListViewItem(itemArrayLv);
@@ -134,7 +134,7 @@ namespace Muhasebe
                 queryString += " WHERE ";
             if (cbProducts.SelectedIndex != -1)
                 queryString += "proCode = '" + cbProducts.SelectedItem + "'";
-            if (cbProducts.SelectedIndex != -1 && (cbEmployee.SelectedIndex != -1 || chbDate.Checked))
+            if (cbProducts.SelectedIndex != -1 && (cbEmployee.SelectedIndex != -1))
                 queryString += " and ";
             if (cbEmployee.SelectedIndex != -1)
                 queryString += "sellerId = '" + listEmployees[cbEmployee.SelectedIndex] + "'";
@@ -215,6 +215,34 @@ namespace Muhasebe
         {
             DateTime date = dtpDate.Value.Date;
             return (long)(date.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+        }
+
+        public string getSellerName(int id)
+        {
+            string name=null;       
+            connection.Open();
+            try
+            {
+                SQLiteCommand query = new SQLiteCommand("Select * From mhsb_employee WHERE id="+id, connection);
+                query.ExecuteNonQuery();
+                SQLiteDataReader reader = query.ExecuteReader();
+                while (reader.Read())
+                {
+                    name = reader["name"].ToString() + " " + reader["surName"].ToString();
+                    break;
+                }
+                reader.Close();
+                query.Dispose();
+            }catch(SQLiteException error)
+            {
+                connection.Close();
+                Console.WriteLine(error.ToString());
+            }
+            connection.Close();
+            if (name != null)
+                return name;
+            else
+                return id + "";
         }
 
         public void createBill()
