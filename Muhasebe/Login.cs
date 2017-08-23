@@ -26,37 +26,42 @@ namespace Muhasebe
         {
             String mail=tctEmail.Text;
             String pw = tctPassword.Text;
-            var request = (HttpWebRequest)WebRequest.Create("http://www.smartmenuexpress.com/mobile/sme/login.html");
+            var request = (HttpWebRequest)WebRequest.Create("http://www.stokcontrol.com/login.php");
 
             var postData = "login_submit=login_submit";
-            postData += "&username="+mail;
+            postData += "&name=" + mail;
             postData += "&password=" + pw;
-            var data = Encoding.ASCII.GetBytes(postData);
+            var data = Encoding.UTF8.GetBytes(postData);
 
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
+            try { 
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(data, 0, data.Length);
+                }
 
-            using (var stream = request.GetRequestStream())
+                request.UserAgent = "Kolege";
+                request.Accept = "success";
+                var response = (HttpWebResponse)request.GetResponse();
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
+                if ((int)json["response"]["success"]==1)
+                {
+                    MainForm form2 = new MainForm();
+                    form2.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    lblError.Show();
+                    lblError.Text = json["response"]["message"].ToString();
+                }
+            }catch(WebException error)
             {
-                stream.Write(data, 0, data.Length);
-            }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-            JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
-            if ((int)json["response"]["success"]==1)
-            {
-                MainForm form2 = new MainForm();
-                form2.Show();
-                this.Hide();
-            }
-            else
-            {
-                lblError.Show();
-                lblError.Text = json["response"]["message"].ToString();
+                MessageBox.Show("Lütfen Internet Bağlantınızı Kontrol ediniz.");
+                Console.WriteLine(error.ToString());
             }
         } 
     }

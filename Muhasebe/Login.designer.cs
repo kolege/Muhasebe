@@ -39,7 +39,7 @@
             // btnLogin
             // 
             this.btnLogin.Location = new System.Drawing.Point(136, 206);
-            this.btnLogin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(2);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 35);
             this.btnLogin.TabIndex = 2;
@@ -70,21 +70,21 @@
             // tctEmail
             // 
             this.tctEmail.Location = new System.Drawing.Point(136, 147);
-            this.tctEmail.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tctEmail.Margin = new System.Windows.Forms.Padding(2);
             this.tctEmail.Name = "tctEmail";
             this.tctEmail.Size = new System.Drawing.Size(76, 20);
             this.tctEmail.TabIndex = 0;
-            this.tctEmail.Text = "ddcafe";
+            this.tctEmail.Text = "admin";
             // 
             // tctPassword
             // 
             this.tctPassword.Location = new System.Drawing.Point(136, 174);
-            this.tctPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tctPassword.Margin = new System.Windows.Forms.Padding(2);
             this.tctPassword.Name = "tctPassword";
             this.tctPassword.PasswordChar = '*';
             this.tctPassword.Size = new System.Drawing.Size(76, 20);
             this.tctPassword.TabIndex = 1;
-            this.tctPassword.Text = "demo";
+            this.tctPassword.Text = "admin";
             // 
             // lblError
             // 
@@ -111,7 +111,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Login";
