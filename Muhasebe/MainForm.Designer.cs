@@ -40,6 +40,7 @@
             this.tbtProCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnSyncToServer = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,8 +52,7 @@
             this.elemenaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(824, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(618, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -61,13 +61,13 @@
             this.ürünnlerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ürünEkleToolStripMenuItem});
             this.ürünnlerToolStripMenuItem.Name = "ürünnlerToolStripMenuItem";
-            this.ürünnlerToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
+            this.ürünnlerToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.ürünnlerToolStripMenuItem.Text = "Ürünler";
             // 
             // ürünEkleToolStripMenuItem
             // 
             this.ürünEkleToolStripMenuItem.Name = "ürünEkleToolStripMenuItem";
-            this.ürünEkleToolStripMenuItem.Size = new System.Drawing.Size(146, 26);
+            this.ürünEkleToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.ürünEkleToolStripMenuItem.Text = "Ürün Ekle";
             this.ürünEkleToolStripMenuItem.Click += new System.EventHandler(this.ürünEkleToolStripMenuItem_Click);
             // 
@@ -76,23 +76,22 @@
             this.elemenaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.elemanEkleToolStripMenuItem});
             this.elemenaToolStripMenuItem.Name = "elemenaToolStripMenuItem";
-            this.elemenaToolStripMenuItem.Size = new System.Drawing.Size(87, 24);
+            this.elemenaToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.elemenaToolStripMenuItem.Text = "Elemanlar";
             // 
             // elemanEkleToolStripMenuItem
             // 
             this.elemanEkleToolStripMenuItem.Name = "elemanEkleToolStripMenuItem";
-            this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.elemanEkleToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.elemanEkleToolStripMenuItem.Text = "Eleman Ekle";
             this.elemanEkleToolStripMenuItem.Click += new System.EventHandler(this.elemanEkleToolStripMenuItem_Click);
             // 
             // btnSaleProduct
             // 
             this.btnSaleProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnSaleProduct.Location = new System.Drawing.Point(65, 340);
-            this.btnSaleProduct.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSaleProduct.Location = new System.Drawing.Point(49, 276);
             this.btnSaleProduct.Name = "btnSaleProduct";
-            this.btnSaleProduct.Size = new System.Drawing.Size(183, 49);
+            this.btnSaleProduct.Size = new System.Drawing.Size(137, 40);
             this.btnSaleProduct.TabIndex = 4;
             this.btnSaleProduct.Text = "Ürün Çıkışı";
             this.btnSaleProduct.UseVisualStyleBackColor = true;
@@ -101,10 +100,9 @@
             // btnPurchaseProduct
             // 
             this.btnPurchaseProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnPurchaseProduct.Location = new System.Drawing.Point(65, 256);
-            this.btnPurchaseProduct.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPurchaseProduct.Location = new System.Drawing.Point(49, 208);
             this.btnPurchaseProduct.Name = "btnPurchaseProduct";
-            this.btnPurchaseProduct.Size = new System.Drawing.Size(183, 49);
+            this.btnPurchaseProduct.Size = new System.Drawing.Size(137, 40);
             this.btnPurchaseProduct.TabIndex = 3;
             this.btnPurchaseProduct.Text = "Ürün Girişi";
             this.btnPurchaseProduct.UseVisualStyleBackColor = true;
@@ -113,10 +111,9 @@
             // btnReports
             // 
             this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.btnReports.Location = new System.Drawing.Point(91, 412);
-            this.btnReports.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnReports.Location = new System.Drawing.Point(68, 335);
             this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(129, 49);
+            this.btnReports.Size = new System.Drawing.Size(97, 40);
             this.btnReports.TabIndex = 5;
             this.btnReports.Text = "Raporlar";
             this.btnReports.UseVisualStyleBackColor = true;
@@ -124,50 +121,60 @@
             // 
             // lvReport
             // 
-            this.lvReport.Location = new System.Drawing.Point(324, 32);
-            this.lvReport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lvReport.Location = new System.Drawing.Point(243, 26);
+            this.lvReport.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lvReport.Name = "lvReport";
-            this.lvReport.Size = new System.Drawing.Size(484, 607);
+            this.lvReport.Size = new System.Drawing.Size(364, 494);
             this.lvReport.TabIndex = 16;
             this.lvReport.UseCompatibleStateImageBehavior = false;
             // 
             // tbtProCode
             // 
-            this.tbtProCode.Location = new System.Drawing.Point(65, 95);
-            this.tbtProCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbtProCode.Location = new System.Drawing.Point(49, 77);
             this.tbtProCode.Name = "tbtProCode";
-            this.tbtProCode.Size = new System.Drawing.Size(181, 22);
+            this.tbtProCode.Size = new System.Drawing.Size(137, 20);
             this.tbtProCode.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.label1.Location = new System.Drawing.Point(101, 69);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(76, 56);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 24);
+            this.label1.Size = new System.Drawing.Size(79, 18);
             this.label1.TabIndex = 18;
             this.label1.Text = "Ürün Kodu";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(105, 139);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Location = new System.Drawing.Point(79, 113);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 37);
+            this.button1.Size = new System.Drawing.Size(75, 30);
             this.button1.TabIndex = 2;
             this.button1.Text = "Ara";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnSyncToServer
+            // 
+            this.btnSyncToServer.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.btnSyncToServer.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.btnSyncToServer.Location = new System.Drawing.Point(12, 479);
+            this.btnSyncToServer.Name = "btnSyncToServer";
+            this.btnSyncToServer.Size = new System.Drawing.Size(201, 40);
+            this.btnSyncToServer.TabIndex = 19;
+            this.btnSyncToServer.Text = "Eşitle";
+            this.btnSyncToServer.UseVisualStyleBackColor = false;
+            this.btnSyncToServer.Click += new System.EventHandler(this.btnSyncToServer_Click);
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(824, 654);
+            this.ClientSize = new System.Drawing.Size(618, 531);
+            this.Controls.Add(this.btnSyncToServer);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbtProCode);
@@ -177,7 +184,6 @@
             this.Controls.Add(this.btnSaleProduct);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -205,6 +211,7 @@
         private System.Windows.Forms.TextBox tbtProCode;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSyncToServer;
     }
 }
 

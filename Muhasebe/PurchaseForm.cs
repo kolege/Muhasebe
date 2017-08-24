@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
+using System.Net;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Muhasebe
@@ -12,12 +17,14 @@ namespace Muhasebe
         SQLiteConnection connection = MainForm.connection;
         int paymentType;
         List<int> listEmployees=new List<int>();
+        int purchaseId;
 
         public PurchaseForm()
         {
             InitializeComponent();
             paymentType = Utils.paymentTypeTL;
             chbTL.Checked = true;
+            cpbLoad.Visible = false;
         }
 
         private void PurchaseForm_Load(object sender, EventArgs e)
@@ -79,43 +86,6 @@ namespace Muhasebe
             }
         }
 
-        private void btnPurchase_Click(object sender, EventArgs e)
-        {
-            if(!string.IsNullOrWhiteSpace(tbtAmount.Text) && !string.IsNullOrWhiteSpace(tbtPrice.Text)
-                && cbProducts.SelectedItem!=null && cbEmployee.SelectedItem != null)
-            {
-                connection.Open();
-                try
-                {
-                    SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_purchase(id,proCode,amount,date,sellerId,price,type) values"
-                        + "(NULL,@proCode,@amount,@date,@sellerId,@price,@type)", connection);
-                    query.Parameters.AddWithValue("@proCode", cbProducts.SelectedItem);
-                    query.Parameters.AddWithValue("@amount", tbtAmount.Text);
-                    query.Parameters.AddWithValue("@date", getDate());
-                    query.Parameters.AddWithValue("@sellerId", listEmployees[cbEmployee.SelectedIndex]);
-                    query.Parameters.AddWithValue("@price", tbtPrice.Text);
-                    query.Parameters.AddWithValue("@type", paymentType);
-                    query.ExecuteNonQuery();
-                    query.Dispose();
-                    SQLiteCommand queryIncrease = new SQLiteCommand("UPDATE mhsb_product SET adet = adet + "+tbtAmount.Text+" WHERE proCode='"+ cbProducts.SelectedItem+"'", connection);
-                    queryIncrease.ExecuteNonQuery();
-                    query.Dispose();
-                    connection.Close();
-                    this.Close();
-                }
-                catch (SQLiteException ex)
-                {
-                    connection.Close();
-                    Console.WriteLine(ex.ToString());
-                    MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Lütfen tüm verileri doldurduğunuzdan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
         private void chbUSD_Click(object sender, EventArgs e)
         {
             chbUSD.Checked = true;
@@ -128,6 +98,110 @@ namespace Muhasebe
             chbTL.Checked = true;
             chbUSD.Checked = false;
             paymentType = Utils.paymentTypeTL;
+        }
+
+        public void addPurchaseToLocalDb()
+        {
+            connection.Open();
+            try
+            {
+                SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_purchase(id,proCode,amount,date,sellerId,price,type) values"
+                    + "(@id,@proCode,@amount,@date,@sellerId,@price,@type)", connection);
+                query.Parameters.AddWithValue("@id", purchaseId);
+                query.Parameters.AddWithValue("@proCode", cbProducts.SelectedItem);
+                query.Parameters.AddWithValue("@amount", tbtAmount.Text);
+                query.Parameters.AddWithValue("@date", getDate());
+                query.Parameters.AddWithValue("@sellerId", listEmployees[cbEmployee.SelectedIndex]);
+                query.Parameters.AddWithValue("@price", tbtPrice.Text);
+                query.Parameters.AddWithValue("@type", paymentType);
+                query.ExecuteNonQuery();
+                query.Dispose();
+                SQLiteCommand queryIncrease = new SQLiteCommand("UPDATE mhsb_product SET adet = adet + " + tbtAmount.Text 
+                    + " WHERE proCode='" + cbProducts.SelectedItem + "'", connection);
+                queryIncrease.ExecuteNonQuery();
+                query.Dispose();
+                connection.Close();
+            }
+            catch (SQLiteException ex)
+            {
+                connection.Close();
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n Lütfen server bağlanıtınız yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            this.Close();
+        }
+
+        public bool addPurchaseToServer()
+        {
+            var request = (HttpWebRequest)WebRequest.Create("http://www.stokcontrol.com/addPurchase.php");
+
+            var postData = "signup_submit=signup_submit";
+            postData += "&proCode=" + cbProducts.SelectedItem;
+            postData += "&date=" + getDate();
+            postData += "&sellerId=" + listEmployees[cbEmployee.SelectedIndex];
+            postData += "&amount=" + tbtAmount.Text;
+            postData += "&price=" + tbtPrice.Text;
+            postData += "&type=" + paymentType;
+            var data = Encoding.UTF8.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            try
+            {
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+                request.UserAgent = "Kolege";
+                request.Accept = "success";
+                var response = (HttpWebResponse)request.GetResponse();
+
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+
+                JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
+                if ((int)json["response"]["success"] == 1)
+                {
+                    purchaseId = (int)json["response"]["id"];
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Girmiş olduğunuz bilgiler hatalıdır.");
+                    return false;
+                }
+            }
+            catch (WebException error)
+            {
+                Console.WriteLine(error.ToString());
+                return false;
+            }
+        }
+
+        private void btnPurchase_Click(object sender, EventArgs e)
+        {
+            cpbLoad.Visible = true;
+            btnPurchase.Visible = false;
+            if (!string.IsNullOrWhiteSpace(tbtAmount.Text) && !string.IsNullOrWhiteSpace(tbtPrice.Text)
+                && cbProducts.SelectedItem != null && cbEmployee.SelectedItem != null)
+            {
+                if (addPurchaseToServer())
+                {
+                    addPurchaseToLocalDb();
+                }
+                else
+                {
+                    MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cpbLoad.Visible = false;
+                    btnPurchase.Visible = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lütfen tüm verileri doldurduğunuzdan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

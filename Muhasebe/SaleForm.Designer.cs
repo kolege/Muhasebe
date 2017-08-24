@@ -30,7 +30,7 @@
         {
             this.chbUSD = new System.Windows.Forms.CheckBox();
             this.chbTL = new System.Windows.Forms.CheckBox();
-            this.btnPurchase = new System.Windows.Forms.Button();
+            this.btnSale = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.tbtPrice = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -46,6 +46,7 @@
             this.tbtCustomerName = new System.Windows.Forms.TextBox();
             this.lblStockAmount = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.cpbLoad = new ProgressBar.CircularProgressBar();
             this.SuspendLayout();
             // 
             // chbUSD
@@ -76,18 +77,18 @@
             this.chbTL.UseVisualStyleBackColor = true;
             this.chbTL.CheckedChanged += new System.EventHandler(this.chbTL_Click);
             // 
-            // btnPurchase
+            // btnSale
             // 
-            this.btnPurchase.BackColor = System.Drawing.Color.Lime;
-            this.btnPurchase.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.btnPurchase.Location = new System.Drawing.Point(491, 285);
-            this.btnPurchase.Margin = new System.Windows.Forms.Padding(2);
-            this.btnPurchase.Name = "btnPurchase";
-            this.btnPurchase.Size = new System.Drawing.Size(238, 56);
-            this.btnPurchase.TabIndex = 8;
-            this.btnPurchase.Text = "Satışı Tamamla";
-            this.btnPurchase.UseVisualStyleBackColor = false;
-            this.btnPurchase.Click += new System.EventHandler(this.btnPurchase_Click);
+            this.btnSale.BackColor = System.Drawing.Color.Lime;
+            this.btnSale.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnSale.Location = new System.Drawing.Point(491, 285);
+            this.btnSale.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSale.Name = "btnSale";
+            this.btnSale.Size = new System.Drawing.Size(238, 56);
+            this.btnSale.TabIndex = 8;
+            this.btnSale.Text = "Satışı Tamamla";
+            this.btnSale.UseVisualStyleBackColor = false;
+            this.btnSale.Click += new System.EventHandler(this.btnPurchase_Click);
             // 
             // label5
             // 
@@ -247,18 +248,38 @@
             this.label8.Text = "Stokta Kalan Miktar :";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // cpbLoad
+            // 
+            this.cpbLoad.Location = new System.Drawing.Point(571, 286);
+            this.cpbLoad.Name = "cpbLoad";
+            this.cpbLoad.PathAlpha = 0;
+            this.cpbLoad.PathColor = System.Drawing.Color.LimeGreen;
+            this.cpbLoad.PathRadius = 25;
+            this.cpbLoad.PathWidth = 5;
+            this.cpbLoad.ProgressAlpha = 150;
+            this.cpbLoad.ProgressAngle = 100;
+            this.cpbLoad.ProgressColor = System.Drawing.Color.White;
+            this.cpbLoad.ProgressInDegree = 180F;
+            this.cpbLoad.ProgressRadius = 25;
+            this.cpbLoad.ProgressWidth = 5;
+            this.cpbLoad.RadiusCalculation = ProgressBar.RadiusCalculation.Auto;
+            this.cpbLoad.Size = new System.Drawing.Size(73, 55);
+            this.cpbLoad.StartAngle = 0;
+            this.cpbLoad.TabIndex = 35;
+            // 
             // SaleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 374);
+            this.Controls.Add(this.cpbLoad);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblStockAmount);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbtCustomerName);
             this.Controls.Add(this.chbUSD);
             this.Controls.Add(this.chbTL);
-            this.Controls.Add(this.btnPurchase);
+            this.Controls.Add(this.btnSale);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tbtPrice);
             this.Controls.Add(this.label4);
@@ -283,7 +304,7 @@
 
         private System.Windows.Forms.CheckBox chbUSD;
         private System.Windows.Forms.CheckBox chbTL;
-        private System.Windows.Forms.Button btnPurchase;
+        private System.Windows.Forms.Button btnSale;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbtPrice;
         private System.Windows.Forms.Label label4;
@@ -299,5 +320,6 @@
         private System.Windows.Forms.TextBox tbtCustomerName;
         private System.Windows.Forms.Label lblStockAmount;
         private System.Windows.Forms.Label label8;
+        private ProgressBar.CircularProgressBar cpbLoad;
     }
 }

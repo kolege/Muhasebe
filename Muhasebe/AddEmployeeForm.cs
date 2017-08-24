@@ -24,7 +24,7 @@ namespace Muhasebe
         {
             InitializeComponent();
             connection = MainForm.connection;
-            //cpbLoad.Visible = false;
+            cpbLoad.Visible = false;
             cpbLoad.AutoScroll=true;
         }
 
@@ -40,7 +40,7 @@ namespace Muhasebe
                 }
                 else
                 {
-                    MessageBox.Show("Lütfen Internet Bağlantınızı Kontrol ediniz.");
+                    MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.");
                     cpbLoad.Visible = false;
                     btnProductAdd.Visible = true;
                 }
@@ -113,6 +113,7 @@ namespace Muhasebe
                 connection.Close();
                 Console.WriteLine(error.ToString());
                 MessageBox.Show("Verileri eklerken hata oluştu. Lütfen serverla bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Close();
             }
         }
     }

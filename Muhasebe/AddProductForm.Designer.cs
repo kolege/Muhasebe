@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbtProductDetail = new System.Windows.Forms.TextBox();
             this.btnProductAdd = new System.Windows.Forms.Button();
+            this.cpbSend = new ProgressBar.CircularProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pbProductImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -99,11 +100,31 @@
             this.btnProductAdd.UseVisualStyleBackColor = false;
             this.btnProductAdd.Click += new System.EventHandler(this.btnProductAdd_Click);
             // 
+            // cpbSend
+            // 
+            this.cpbSend.Location = new System.Drawing.Point(373, 275);
+            this.cpbSend.Name = "cpbSend";
+            this.cpbSend.PathAlpha = 0;
+            this.cpbSend.PathColor = System.Drawing.Color.LawnGreen;
+            this.cpbSend.PathRadius = 25;
+            this.cpbSend.PathWidth = 5;
+            this.cpbSend.ProgressAlpha = 150;
+            this.cpbSend.ProgressAngle = 100;
+            this.cpbSend.ProgressColor = System.Drawing.Color.White;
+            this.cpbSend.ProgressInDegree = 180F;
+            this.cpbSend.ProgressRadius = 25;
+            this.cpbSend.ProgressWidth = 5;
+            this.cpbSend.RadiusCalculation = ProgressBar.RadiusCalculation.Auto;
+            this.cpbSend.Size = new System.Drawing.Size(68, 55);
+            this.cpbSend.StartAngle = 0;
+            this.cpbSend.TabIndex = 5;
+            // 
             // AddProductForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 355);
+            this.Controls.Add(this.cpbSend);
             this.Controls.Add(this.btnProductAdd);
             this.Controls.Add(this.tbtProductDetail);
             this.Controls.Add(this.label2);
@@ -127,5 +148,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbtProductDetail;
         private System.Windows.Forms.Button btnProductAdd;
+        private ProgressBar.CircularProgressBar cpbSend;
     }
 }

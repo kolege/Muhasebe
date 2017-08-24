@@ -42,6 +42,7 @@
             this.btnPurchase = new System.Windows.Forms.Button();
             this.chbTL = new System.Windows.Forms.CheckBox();
             this.chbUSD = new System.Windows.Forms.CheckBox();
+            this.cpbLoad = new ProgressBar.CircularProgressBar();
             this.SuspendLayout();
             // 
             // cbProducts
@@ -85,7 +86,7 @@
             this.dtpDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpDate.Location = new System.Drawing.Point(219, 87);
-            this.dtpDate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtpDate.Margin = new System.Windows.Forms.Padding(2);
             this.dtpDate.Name = "dtpDate";
             this.dtpDate.Size = new System.Drawing.Size(92, 23);
             this.dtpDate.TabIndex = 8;
@@ -95,7 +96,7 @@
             this.dtpTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.dtpTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpTime.Location = new System.Drawing.Point(340, 87);
-            this.dtpTime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtpTime.Margin = new System.Windows.Forms.Padding(2);
             this.dtpTime.Name = "dtpTime";
             this.dtpTime.ShowUpDown = true;
             this.dtpTime.Size = new System.Drawing.Size(88, 23);
@@ -116,7 +117,7 @@
             this.tbtAmount.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.tbtAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.tbtAmount.Location = new System.Drawing.Point(34, 213);
-            this.tbtAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbtAmount.Margin = new System.Windows.Forms.Padding(2);
             this.tbtAmount.Multiline = true;
             this.tbtAmount.Name = "tbtAmount";
             this.tbtAmount.Size = new System.Drawing.Size(136, 63);
@@ -148,7 +149,7 @@
             this.tbtPrice.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.tbtPrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.tbtPrice.Location = new System.Drawing.Point(251, 213);
-            this.tbtPrice.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbtPrice.Margin = new System.Windows.Forms.Padding(2);
             this.tbtPrice.Multiline = true;
             this.tbtPrice.Name = "tbtPrice";
             this.tbtPrice.Size = new System.Drawing.Size(136, 63);
@@ -160,7 +161,7 @@
             this.btnPurchase.BackColor = System.Drawing.Color.Lime;
             this.btnPurchase.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnPurchase.Location = new System.Drawing.Point(423, 307);
-            this.btnPurchase.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnPurchase.Margin = new System.Windows.Forms.Padding(2);
             this.btnPurchase.Name = "btnPurchase";
             this.btnPurchase.Size = new System.Drawing.Size(238, 56);
             this.btnPurchase.TabIndex = 7;
@@ -173,7 +174,7 @@
             this.chbTL.AutoSize = true;
             this.chbTL.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.chbTL.Location = new System.Drawing.Point(478, 214);
-            this.chbTL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbTL.Margin = new System.Windows.Forms.Padding(2);
             this.chbTL.Name = "chbTL";
             this.chbTL.Size = new System.Drawing.Size(62, 22);
             this.chbTL.TabIndex = 5;
@@ -186,7 +187,7 @@
             this.chbUSD.AutoSize = true;
             this.chbUSD.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.chbUSD.Location = new System.Drawing.Point(478, 250);
-            this.chbUSD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chbUSD.Margin = new System.Windows.Forms.Padding(2);
             this.chbUSD.Name = "chbUSD";
             this.chbUSD.Size = new System.Drawing.Size(77, 22);
             this.chbUSD.TabIndex = 6;
@@ -194,11 +195,31 @@
             this.chbUSD.UseVisualStyleBackColor = true;
             this.chbUSD.Click += new System.EventHandler(this.chbUSD_Click);
             // 
+            // cpbLoad
+            // 
+            this.cpbLoad.Location = new System.Drawing.Point(504, 308);
+            this.cpbLoad.Name = "cpbLoad";
+            this.cpbLoad.PathAlpha = 0;
+            this.cpbLoad.PathColor = System.Drawing.Color.LimeGreen;
+            this.cpbLoad.PathRadius = 25;
+            this.cpbLoad.PathWidth = 5;
+            this.cpbLoad.ProgressAlpha = 150;
+            this.cpbLoad.ProgressAngle = 100;
+            this.cpbLoad.ProgressColor = System.Drawing.Color.White;
+            this.cpbLoad.ProgressInDegree = 180F;
+            this.cpbLoad.ProgressRadius = 25;
+            this.cpbLoad.ProgressWidth = 5;
+            this.cpbLoad.RadiusCalculation = ProgressBar.RadiusCalculation.Auto;
+            this.cpbLoad.Size = new System.Drawing.Size(73, 55);
+            this.cpbLoad.StartAngle = 0;
+            this.cpbLoad.TabIndex = 12;
+            // 
             // PurchaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 374);
+            this.Controls.Add(this.cpbLoad);
             this.Controls.Add(this.chbUSD);
             this.Controls.Add(this.chbTL);
             this.Controls.Add(this.btnPurchase);
@@ -240,5 +261,6 @@
         private System.Windows.Forms.Button btnPurchase;
         private System.Windows.Forms.CheckBox chbTL;
         private System.Windows.Forms.CheckBox chbUSD;
+        private ProgressBar.CircularProgressBar cpbLoad;
     }
 }
