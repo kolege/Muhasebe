@@ -42,7 +42,7 @@ namespace Muhasebe
             {
                 ProductModel product = new ProductModel(reader["proCode"].ToString());
                 product.amount=long.Parse(reader["adet"].ToString());
-                product.image = (Bitmap)((new ImageConverter()).ConvertFrom(reader["image"]));
+                product.image = (Bitmap)((new ImageConverter()).ConvertFrom(Convert.FromBase64String(reader["image"].ToString())));
                 product.description = reader["description"].ToString();
                 cbProducts.Items.Add(product.proCode);
                 listProducts.Add(product);

@@ -32,10 +32,15 @@ namespace Muhasebe
         {
             if (!string.IsNullOrWhiteSpace(tbtProductCode.Text) && !string.IsNullOrWhiteSpace(tbtProductDetail.Text) && boolImageSelected)
             {
-                cpbSend.Visible = true;
                 btnProductAdd.Visible = false;
+                cpbSend.Visible = true;
                 if (addProductToServer())
                     addProductToLocalDb();
+                else { 
+                    MessageBox.Show("İnternet bağlantınızı kontrol ediniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cpbSend.Visible = false;
+                    btnProductAdd.Visible = true;
+                }
             }
             else
             {
@@ -48,13 +53,14 @@ namespace Muhasebe
             proCode = tbtProductCode.Text;
             proDetail = tbtProductDetail.Text;
             proImage = imageToByteArray(pbProductImage.Image);
+            string result = Convert.ToBase64String(proImage);
             var request = (HttpWebRequest)WebRequest.Create("http://www.stokcontrol.com/addProduct.php");
 
             var postData = "signup_submit=signup_submit";
             postData += "&proCode=" + proCode;
             postData += "&description=" + proDetail;
-            postData += "&image=" + proImage;
-            postData += "adet=0";
+            postData += "&image=" + result;
+            postData += "&adet=0";
             var data = Encoding.UTF8.GetBytes(postData);
 
             request.Method = "POST";
@@ -96,7 +102,6 @@ namespace Muhasebe
         {
             String proCode = tbtProductCode.Text;
             String proDetail = tbtProductDetail.Text;
-            byte[] proImage = imageToByteArray(pbProductImage.Image);
             connection.Open();
             try
             {
@@ -104,7 +109,8 @@ namespace Muhasebe
                     + "(@proCode,@description,@image,@adet)", connection);
                 query.Parameters.AddWithValue("@proCode", proCode);
                 query.Parameters.AddWithValue("@description", proDetail);
-                query.Parameters.AddWithValue("@image", proImage);
+                string result = Convert.ToBase64String(proImage);
+                query.Parameters.AddWithValue("@image", result);
                 query.Parameters.AddWithValue("@adet", 0);
                 query.ExecuteNonQuery();
                 query.Dispose();

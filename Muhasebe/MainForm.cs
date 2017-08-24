@@ -43,7 +43,7 @@ namespace Muhasebe
         public void createDbTables()
         {
             connection.Open();
-            SQLiteCommand CREATE_PRODUCT_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(proCode TEXT NOT NULL PRIMARY KEY, description TEXT, image BLOB, adet TEXT)", connection);
+            SQLiteCommand CREATE_PRODUCT_TABLE = new SQLiteCommand("CREATE TABLE mhsb_product(proCode TEXT NOT NULL PRIMARY KEY, description TEXT, image TEXT, adet TEXT)", connection);
             CREATE_PRODUCT_TABLE.ExecuteNonQuery();
             CREATE_PRODUCT_TABLE.Dispose();
 
@@ -76,8 +76,8 @@ namespace Muhasebe
                     SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_product (proCode,description,image,adet) values (@proCode,@description,@image,@adet)", connection);
                     query.Parameters.AddWithValue("@proCode", productObject["proCode"]);
                     query.Parameters.AddWithValue("@description", productObject["description"]);
-                    byte[] buffer = Encoding.UTF8.GetBytes(productObject["image"].ToString());
-                    query.Parameters.AddWithValue("@image", buffer);
+                    string image= productObject["image"].ToString().Replace(' ', '+');
+                    query.Parameters.AddWithValue("@image", image);
                     query.Parameters.AddWithValue("@adet", productObject["adet"]);
                     query.ExecuteNonQuery();
                 }
