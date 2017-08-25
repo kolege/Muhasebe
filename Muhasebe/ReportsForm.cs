@@ -42,7 +42,13 @@ namespace Muhasebe
             {
                 ProductModel product = new ProductModel(reader["proCode"].ToString());
                 product.amount=long.Parse(reader["adet"].ToString());
-                product.image = (Bitmap)((new ImageConverter()).ConvertFrom(Convert.FromBase64String(reader["image"].ToString())));
+                string image=reader["image"].ToString();
+                int mod4 = image.Length % 4;
+                if (mod4 > 0)
+                {
+                    image += new string('=', 4 - mod4);
+                }
+                product.image = (Bitmap)((new ImageConverter()).ConvertFrom(Convert.FromBase64String(image)));
                 product.description = reader["description"].ToString();
                 cbProducts.Items.Add(product.proCode);
                 listProducts.Add(product);
@@ -144,6 +150,7 @@ namespace Muhasebe
             {
                 queryString+=" date >= "+ getDate();
             }
+            queryString += " ORDER BY date";
             SQLiteCommand query = new SQLiteCommand(queryString, connection);
             query.ExecuteNonQuery();
             SQLiteDataReader reader = query.ExecuteReader();
@@ -255,12 +262,14 @@ namespace Muhasebe
             }
 
             #region Font seç
-            BaseFont trArial = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, false);
-            iTextSharp.text.Font fontArial = new iTextSharp.text.Font(trArial, 10, iTextSharp.text.Font.NORMAL, BaseColor.DARK_GRAY);
-            iTextSharp.text.Font fontArialHeader = new iTextSharp.text.Font(trArial, 13, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
-            iTextSharp.text.Font fontArialTableHeader = new iTextSharp.text.Font(trArial, 11, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
-            iTextSharp.text.Font fontArialbold = new iTextSharp.text.Font(trArial, 9, iTextSharp.text.Font.BOLD, BaseColor.DARK_GRAY);
-            iTextSharp.text.Font fontArialboldgeneral = new iTextSharp.text.Font(trArial, 10, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            BaseFont STF_Helvetica_Turkish = BaseFont.CreateFont("Helvetica", "Cp1254", BaseFont.NOT_EMBEDDED);
+            //BaseFont trArial = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, false);
+            iTextSharp.text.Font fontArialHL = new iTextSharp.text.Font(STF_Helvetica_Turkish, 9, iTextSharp.text.Font.NORMAL, BaseColor.DARK_GRAY);
+            iTextSharp.text.Font fontArial = new iTextSharp.text.Font(STF_Helvetica_Turkish, 10, iTextSharp.text.Font.NORMAL, BaseColor.DARK_GRAY);
+            iTextSharp.text.Font fontArialHeader = new iTextSharp.text.Font(STF_Helvetica_Turkish, 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            iTextSharp.text.Font fontArialTableHeader = new iTextSharp.text.Font(STF_Helvetica_Turkish, 11, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
+            iTextSharp.text.Font fontArialbold = new iTextSharp.text.Font(STF_Helvetica_Turkish, 9, iTextSharp.text.Font.BOLD, BaseColor.DARK_GRAY);
+            iTextSharp.text.Font fontArialboldgeneral = new iTextSharp.text.Font(STF_Helvetica_Turkish, 10, iTextSharp.text.Font.BOLD, BaseColor.BLACK);
             #endregion
 
             iTextSharp.text.Document pdfFile = new iTextSharp.text.Document();
@@ -289,7 +298,7 @@ namespace Muhasebe
                     header1 += "\nSatış Elemanı : " + cbEmployee.SelectedItem.ToString();
                 if (chbDate.Checked)
                     header1 += "\n"+dtpDate.Value.ToShortDateString()+" Tarihinden İtibaren";
-                PdfPCell cellheader1 = new PdfPCell(new Phrase(header1, fontArial));
+                PdfPCell cellheader1 = new PdfPCell(new Phrase(header1, fontArialHL));
                 cellheader1.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                 cellheader1.VerticalAlignment = PdfPCell.ALIGN_BOTTOM;
                 cellheader1.FixedHeight = 60f;
@@ -328,9 +337,19 @@ namespace Muhasebe
                 for (int i = 0; i < listDeals.Count; i++)
                 {
                     DealModel dm = listDeals.ElementAt(i);
-                    pdfTable.AddCell(new Phrase(UnixTimeStampToDateTime(dm.date).ToString(), fontArial));
+                    if (cbProducts.SelectedIndex != -1 && cbEmployee.SelectedIndex != -1)
+                        pdfTable.AddCell(new Phrase(UnixTimeStampToDateTime(dm.date).ToString(), fontArial));
+                    else if (cbEmployee.SelectedIndex != -1)
+                        pdfTable.AddCell(new Phrase(UnixTimeStampToDateTime(dm.date).ToString() + "\n" + dm.proCode, fontArial));
+                    else if (cbProducts.SelectedIndex != -1)
+                        pdfTable.AddCell(new Phrase(UnixTimeStampToDateTime(dm.date).ToString() + "\n" + getSellerName(dm.sellerID), fontArial));
+                    else
+                        pdfTable.AddCell(new Phrase(UnixTimeStampToDateTime(dm.date).ToString() + "\n" + dm.proCode + "\n" + getSellerName(dm.sellerID)));
                     pdfTable.AddCell(new Phrase(dm.amount + "", fontArial));
-                    pdfTable.AddCell(new Phrase(dm.price+"", fontArial));
+                    if (dm.type==Utils.paymentTypeTL)
+                        pdfTable.AddCell(new Phrase(dm.price + " TL", fontArial));
+                    else
+                        pdfTable.AddCell(new Phrase(dm.price + " USD", fontArial));
                 }
 
                 pdfTable.AddCell(new Phrase("GENEL TOPLAM", fontArialboldgeneral));
@@ -364,6 +383,7 @@ namespace Muhasebe
             }
             catch (IOException e)
             {
+                Console.WriteLine(e.ToString());
                 MessageBox.Show("Fatura şuan kullanımda olduğu için değiştirilemşyor.Lütfen kullanıma son verip tekrar deneyiniz.");
             }
 

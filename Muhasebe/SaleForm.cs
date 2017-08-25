@@ -22,12 +22,12 @@ namespace Muhasebe
         List<int> listEmployees = new List<int>();
         List<int> listStocks = new List<int>();
         int saleId;
+        LoadingForm loadingForm = new LoadingForm();
 
         public SaleForm()
         {
             InitializeComponent();
             paymentType = Utils.paymentTypeTL;
-            cpbLoad.Visible = false;
         }
 
         private void cbProducts_SelectedIndexChanged(object sender, EventArgs e)
@@ -150,6 +150,7 @@ namespace Muhasebe
                 Console.WriteLine(ex.ToString());
                 MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n Lütfen server bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            loadingForm.Close();
             this.Close();
         }
 
@@ -210,15 +211,17 @@ namespace Muhasebe
                 && !string.IsNullOrWhiteSpace(tbtCustomerName.Text)
                 && cbProducts.SelectedItem != null && cbEmployee.SelectedItem != null)
             {
+                loadingForm.Show();
+                this.Hide();
                 if (addSaleToServer())
                 {
                     addSaleToLocalDb();
                 }
                 else
                 {
+                    loadingForm.Close();
+                    this.Show();
                     MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cpbLoad.Visible = false;
-                    btnSale.Visible = true;
                 }
             }
             else

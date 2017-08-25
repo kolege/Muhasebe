@@ -19,30 +19,30 @@ namespace Muhasebe
     {
         SQLiteConnection connection;
         int employeeID;
+        LoadingForm loadingForm = new LoadingForm();
+
 
         public AddEmployeeForm()
         {
             InitializeComponent();
             connection = MainForm.connection;
-            cpbLoad.Visible = false;
-            cpbLoad.AutoScroll=true;
         }
 
         private void btnProductAdd_Click(object sender, EventArgs e)
         {
             if(!string.IsNullOrWhiteSpace(tbtName.Text) && !string.IsNullOrWhiteSpace(tbtSurname.Text))
             {
-                cpbLoad.Visible = true;
-                btnProductAdd.Visible = false;
+                this.Hide();
+                loadingForm.Show();
                 if(addEmloyeeToServer(tbtName.Text.ToString(), tbtSurname.Text.ToString()))
                 {
                     addEmployeeToLocalDb();
                 }
                 else
                 {
+                    this.Show();
+                    loadingForm.Close();
                     MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.");
-                    cpbLoad.Visible = false;
-                    btnProductAdd.Visible = true;
                 }
             }
 
@@ -106,12 +106,14 @@ namespace Muhasebe
                 query.ExecuteNonQuery();
                 query.Dispose();
                 connection.Close();
+                loadingForm.Close();
                 this.Close();
             }
             catch (SQLiteException error)
             {
                 connection.Close();
                 Console.WriteLine(error.ToString());
+                loadingForm.Close();
                 MessageBox.Show("Verileri eklerken hata oluştu. Lütfen serverla bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Close();
             }

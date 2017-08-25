@@ -60,7 +60,7 @@ namespace Muhasebe
                 }
             }catch(WebException error)
             {
-                MessageBox.Show("Lütfen Internet Bağlantınızı Kontrol ediniz.");
+                MessageBox.Show("Lütfen Internet Bağlantınızı Kontrol ediniz.\n Eğer internet bağlantınızda sorun yok ise, serverla iletişime geçiniz.");
                 Console.WriteLine(error.ToString());
             }
         } 

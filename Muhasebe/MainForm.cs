@@ -65,7 +65,7 @@ namespace Muhasebe
         {
             JObject data = getJsonFromUrl("http://www.stokcontrol.com/getAllData.php");
             clearDbTables();
-            //Console.WriteLine(jsonArrayWaiters.ToString());
+            //Console.WriteLine(data.ToString());
             connection.Open();
             data = (JObject)data["response"];
             if ((int)data["success"] == 1) { 
@@ -161,7 +161,7 @@ namespace Muhasebe
             var response = (HttpWebResponse)request.GetResponse();
 
             var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            Console.WriteLine(responseString);
+            //Console.WriteLine(responseString);
             JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
 
             return json;
@@ -259,8 +259,14 @@ namespace Muhasebe
 
         private void btnSyncToServer_Click(object sender, EventArgs e)
         {
+            LoadingForm loadingForm = new LoadingForm();
+            loadingForm.Show();
+            this.Hide();
             clearDbTables();
             fillDb();
+            MainForm_Activated(null, null);
+            loadingForm.Close();
+            this.Show();
         }
     }
 }

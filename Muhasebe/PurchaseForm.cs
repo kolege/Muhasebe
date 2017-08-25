@@ -18,13 +18,13 @@ namespace Muhasebe
         int paymentType;
         List<int> listEmployees=new List<int>();
         int purchaseId;
+        LoadingForm loadingForm = new LoadingForm();
 
         public PurchaseForm()
         {
             InitializeComponent();
             paymentType = Utils.paymentTypeTL;
             chbTL.Checked = true;
-            cpbLoad.Visible = false;
         }
 
         private void PurchaseForm_Load(object sender, EventArgs e)
@@ -128,6 +128,7 @@ namespace Muhasebe
                 Console.WriteLine(ex.ToString());
                 MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n Lütfen server bağlanıtınız yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            loadingForm.Close();
             this.Close();
         }
 
@@ -182,20 +183,21 @@ namespace Muhasebe
 
         private void btnPurchase_Click(object sender, EventArgs e)
         {
-            cpbLoad.Visible = true;
-            btnPurchase.Visible = false;
             if (!string.IsNullOrWhiteSpace(tbtAmount.Text) && !string.IsNullOrWhiteSpace(tbtPrice.Text)
                 && cbProducts.SelectedItem != null && cbEmployee.SelectedItem != null)
             {
+                loadingForm.Show();
+                this.Hide();
                 if (addPurchaseToServer())
                 {
                     addPurchaseToLocalDb();
                 }
                 else
                 {
+                    loadingForm.Close();
+                    this.Show();
                     MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cpbLoad.Visible = false;
-                    btnPurchase.Visible = true;
+
                 }
             }
             else

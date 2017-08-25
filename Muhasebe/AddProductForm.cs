@@ -21,25 +21,25 @@ namespace Muhasebe
         string proCode, proDetail;
         byte[] proImage;
         bool boolImageSelected = false;
+        LoadingForm loadingForm = new LoadingForm();
 
         public AddProductForm()
         {
             InitializeComponent();
-            cpbSend.Visible = false;
         }
 
         private void btnProductAdd_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(tbtProductCode.Text) && !string.IsNullOrWhiteSpace(tbtProductDetail.Text) && boolImageSelected)
             {
-                btnProductAdd.Visible = false;
-                cpbSend.Visible = true;
+                loadingForm.Show();
+                this.Hide();
                 if (addProductToServer())
                     addProductToLocalDb();
-                else { 
+                else {
+                    loadingForm.Close();
+                    this.Show();
                     MessageBox.Show("İnternet bağlantınızı kontrol ediniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cpbSend.Visible = false;
-                    btnProductAdd.Visible = true;
                 }
             }
             else
@@ -115,12 +115,15 @@ namespace Muhasebe
                 query.ExecuteNonQuery();
                 query.Dispose();
                 connection.Close();
+                loadingForm.Close();
                 this.Close();
             }
             catch (SQLiteException ex)
             {
                 connection.Close();
                 Console.WriteLine(ex.ToString());
+                this.Show();
+                loadingForm.Close();
                 MessageBox.Show("Verileri eklerken hata oluştu. Lütfen serverla bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }

@@ -42,7 +42,6 @@
             this.btnPurchase = new System.Windows.Forms.Button();
             this.chbTL = new System.Windows.Forms.CheckBox();
             this.chbUSD = new System.Windows.Forms.CheckBox();
-            this.cpbLoad = new ProgressBar.CircularProgressBar();
             this.SuspendLayout();
             // 
             // cbProducts
@@ -195,31 +194,11 @@
             this.chbUSD.UseVisualStyleBackColor = true;
             this.chbUSD.Click += new System.EventHandler(this.chbUSD_Click);
             // 
-            // cpbLoad
-            // 
-            this.cpbLoad.Location = new System.Drawing.Point(504, 308);
-            this.cpbLoad.Name = "cpbLoad";
-            this.cpbLoad.PathAlpha = 0;
-            this.cpbLoad.PathColor = System.Drawing.Color.LimeGreen;
-            this.cpbLoad.PathRadius = 25;
-            this.cpbLoad.PathWidth = 5;
-            this.cpbLoad.ProgressAlpha = 150;
-            this.cpbLoad.ProgressAngle = 100;
-            this.cpbLoad.ProgressColor = System.Drawing.Color.White;
-            this.cpbLoad.ProgressInDegree = 180F;
-            this.cpbLoad.ProgressRadius = 25;
-            this.cpbLoad.ProgressWidth = 5;
-            this.cpbLoad.RadiusCalculation = ProgressBar.RadiusCalculation.Auto;
-            this.cpbLoad.Size = new System.Drawing.Size(73, 55);
-            this.cpbLoad.StartAngle = 0;
-            this.cpbLoad.TabIndex = 12;
-            // 
             // PurchaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(729, 374);
-            this.Controls.Add(this.cpbLoad);
             this.Controls.Add(this.chbUSD);
             this.Controls.Add(this.chbTL);
             this.Controls.Add(this.btnPurchase);
@@ -261,6 +240,5 @@
         private System.Windows.Forms.Button btnPurchase;
         private System.Windows.Forms.CheckBox chbTL;
         private System.Windows.Forms.CheckBox chbUSD;
-        private ProgressBar.CircularProgressBar cpbLoad;
     }
 }

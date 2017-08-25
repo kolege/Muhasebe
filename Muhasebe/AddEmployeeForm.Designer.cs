@@ -34,7 +34,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.cpbLoad = new ProgressBar.CircularProgressBar();
             this.SuspendLayout();
             // 
             // btnProductAdd
@@ -88,31 +87,11 @@
             this.label2.Text = "Eleman Soyadı";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // cpbLoad
-            // 
-            this.cpbLoad.Location = new System.Drawing.Point(158, 113);
-            this.cpbLoad.Name = "cpbLoad";
-            this.cpbLoad.PathAlpha = 0;
-            this.cpbLoad.PathColor = System.Drawing.Color.LimeGreen;
-            this.cpbLoad.PathRadius = 25;
-            this.cpbLoad.PathWidth = 5;
-            this.cpbLoad.ProgressAlpha = 150;
-            this.cpbLoad.ProgressAngle = 100;
-            this.cpbLoad.ProgressColor = System.Drawing.Color.White;
-            this.cpbLoad.ProgressInDegree = 180F;
-            this.cpbLoad.ProgressRadius = 25;
-            this.cpbLoad.ProgressWidth = 5;
-            this.cpbLoad.RadiusCalculation = ProgressBar.RadiusCalculation.Auto;
-            this.cpbLoad.Size = new System.Drawing.Size(73, 55);
-            this.cpbLoad.StartAngle = 0;
-            this.cpbLoad.TabIndex = 10;
-            // 
             // AddEmployeeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(422, 207);
-            this.Controls.Add(this.cpbLoad);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnProductAdd);
@@ -134,6 +113,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ProgressBar.CircularProgressBar cpbLoad;
     }
 }

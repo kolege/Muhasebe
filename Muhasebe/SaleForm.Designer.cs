@@ -46,7 +46,6 @@
             this.tbtCustomerName = new System.Windows.Forms.TextBox();
             this.lblStockAmount = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.cpbLoad = new ProgressBar.CircularProgressBar();
             this.SuspendLayout();
             // 
             // chbUSD
@@ -248,31 +247,11 @@
             this.label8.Text = "Stokta Kalan Miktar :";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cpbLoad
-            // 
-            this.cpbLoad.Location = new System.Drawing.Point(571, 286);
-            this.cpbLoad.Name = "cpbLoad";
-            this.cpbLoad.PathAlpha = 0;
-            this.cpbLoad.PathColor = System.Drawing.Color.LimeGreen;
-            this.cpbLoad.PathRadius = 25;
-            this.cpbLoad.PathWidth = 5;
-            this.cpbLoad.ProgressAlpha = 150;
-            this.cpbLoad.ProgressAngle = 100;
-            this.cpbLoad.ProgressColor = System.Drawing.Color.White;
-            this.cpbLoad.ProgressInDegree = 180F;
-            this.cpbLoad.ProgressRadius = 25;
-            this.cpbLoad.ProgressWidth = 5;
-            this.cpbLoad.RadiusCalculation = ProgressBar.RadiusCalculation.Auto;
-            this.cpbLoad.Size = new System.Drawing.Size(73, 55);
-            this.cpbLoad.StartAngle = 0;
-            this.cpbLoad.TabIndex = 35;
-            // 
             // SaleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(829, 374);
-            this.Controls.Add(this.cpbLoad);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.lblStockAmount);
             this.Controls.Add(this.label6);
@@ -320,6 +299,5 @@
         private System.Windows.Forms.TextBox tbtCustomerName;
         private System.Windows.Forms.Label lblStockAmount;
         private System.Windows.Forms.Label label8;
-        private ProgressBar.CircularProgressBar cpbLoad;
     }
 }
