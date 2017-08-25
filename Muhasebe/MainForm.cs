@@ -64,65 +64,69 @@ namespace Muhasebe
         private void fillDb()
         {
             JObject data = getJsonFromUrl("http://www.stokcontrol.com/getAllData.php");
-            clearDbTables();
-            //Console.WriteLine(data.ToString());
-            connection.Open();
-            data = (JObject)data["response"];
-            if ((int)data["success"] == 1) { 
-                JArray jsonArrayDatas = (JArray)data["products"];
-                for (var i = 0; i < jsonArrayDatas.Count; i++)
+            if (data != null)
+            {
+                clearDbTables();
+                //Console.WriteLine(data.ToString());
+                connection.Open();
+                data = (JObject)data["response"];
+                if ((int)data["success"] == 1)
                 {
-                    JObject productObject = (JObject)jsonArrayDatas[i];
-                    SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_product (proCode,description,image,adet) values (@proCode,@description,@image,@adet)", connection);
-                    query.Parameters.AddWithValue("@proCode", productObject["proCode"]);
-                    query.Parameters.AddWithValue("@description", productObject["description"]);
-                    string image= productObject["image"].ToString().Replace(' ', '+');
-                    query.Parameters.AddWithValue("@image", image);
-                    query.Parameters.AddWithValue("@adet", productObject["adet"]);
-                    query.ExecuteNonQuery();
+                    JArray jsonArrayDatas = (JArray)data["products"];
+                    for (var i = 0; i < jsonArrayDatas.Count; i++)
+                    {
+                        JObject productObject = (JObject)jsonArrayDatas[i];
+                        SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_product (proCode,description,image,adet) values (@proCode,@description,@image,@adet)", connection);
+                        query.Parameters.AddWithValue("@proCode", productObject["proCode"]);
+                        query.Parameters.AddWithValue("@description", productObject["description"]);
+                        string image = productObject["image"].ToString().Replace(' ', '+');
+                        query.Parameters.AddWithValue("@image", image);
+                        query.Parameters.AddWithValue("@adet", productObject["adet"]);
+                        query.ExecuteNonQuery();
+                    }
+                    jsonArrayDatas = (JArray)data["employees"];
+                    for (var i = 0; i < jsonArrayDatas.Count; i++)
+                    {
+                        JObject employeeObject = (JObject)jsonArrayDatas[i];
+                        SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_employee (id, name, surname) values (@id, @name, @surname)", connection);
+                        query.Parameters.AddWithValue("@id", employeeObject["id"]);
+                        query.Parameters.AddWithValue("@name", employeeObject["name"]);
+                        query.Parameters.AddWithValue("@surname", employeeObject["surname"]);
+                        query.ExecuteNonQuery();
+                    }
+                    jsonArrayDatas = (JArray)data["purchases"];
+                    for (var i = 0; i < jsonArrayDatas.Count; i++)
+                    {
+                        JObject purchaseObject = (JObject)jsonArrayDatas[i];
+                        SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_purchase (id, proCode, amount, date, sellerId, price, type) " +
+                            "values (@id, @proCode, @amount, @date, @sellerId, @price, @type)", connection);
+                        query.Parameters.AddWithValue("@id", purchaseObject["id"]);
+                        query.Parameters.AddWithValue("@proCode", purchaseObject["proCode"]);
+                        query.Parameters.AddWithValue("@amount", purchaseObject["amount"]);
+                        query.Parameters.AddWithValue("@date", purchaseObject["date"]);
+                        query.Parameters.AddWithValue("@sellerId", purchaseObject["sellerId"]);
+                        query.Parameters.AddWithValue("@price", purchaseObject["price"]);
+                        query.Parameters.AddWithValue("@type", purchaseObject["type"]);
+                        query.ExecuteNonQuery();
+                    }
+                    jsonArrayDatas = (JArray)data["sales"];
+                    for (var i = 0; i < jsonArrayDatas.Count; i++)
+                    {
+                        JObject categoryDetailObject = (JObject)jsonArrayDatas[i];
+                        SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_sale (id, proCode, date, sellerId, buyer, amount, price, type)" +
+                            " values (@id,@proCode,@date,@sellerId,@buyer,@amount,@price,@type)", connection);
+                        query.Parameters.AddWithValue("@id", categoryDetailObject["id"]);
+                        query.Parameters.AddWithValue("@proCode", categoryDetailObject["proCode"]);
+                        query.Parameters.AddWithValue("@date", categoryDetailObject["date"]);
+                        query.Parameters.AddWithValue("@sellerId", categoryDetailObject["sellerId"]);
+                        query.Parameters.AddWithValue("@buyer", categoryDetailObject["customer"]);
+                        query.Parameters.AddWithValue("@amount", categoryDetailObject["amount"]);
+                        query.Parameters.AddWithValue("@price", categoryDetailObject["price"]);
+                        query.Parameters.AddWithValue("@type", categoryDetailObject["type"]);
+                        query.ExecuteNonQuery();
+                    }
+                    connection.Close();
                 }
-                jsonArrayDatas = (JArray)data["employees"];
-                for (var i = 0; i < jsonArrayDatas.Count; i++)
-                {
-                    JObject employeeObject = (JObject)jsonArrayDatas[i];
-                    SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_employee (id, name, surname) values (@id, @name, @surname)", connection);
-                    query.Parameters.AddWithValue("@id", employeeObject["id"]);
-                    query.Parameters.AddWithValue("@name", employeeObject["name"]);
-                    query.Parameters.AddWithValue("@surname", employeeObject["surname"]);
-                    query.ExecuteNonQuery();
-                }
-                jsonArrayDatas = (JArray)data["purchases"];
-                for (var i = 0; i < jsonArrayDatas.Count; i++)
-                {
-                    JObject purchaseObject = (JObject)jsonArrayDatas[i];
-                    SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_purchase (id, proCode, amount, date, sellerId, price, type) "+
-                        "values (@id, @proCode, @amount, @date, @sellerId, @price, @type)", connection);
-                    query.Parameters.AddWithValue("@id", purchaseObject["id"]);
-                    query.Parameters.AddWithValue("@proCode", purchaseObject["proCode"]);
-                    query.Parameters.AddWithValue("@amount", purchaseObject["amount"]);
-                    query.Parameters.AddWithValue("@date", purchaseObject["date"]);
-                    query.Parameters.AddWithValue("@sellerId", purchaseObject["sellerId"]);
-                    query.Parameters.AddWithValue("@price", purchaseObject["price"]);
-                    query.Parameters.AddWithValue("@type", purchaseObject["type"]);
-                    query.ExecuteNonQuery();
-                }
-                jsonArrayDatas = (JArray)data["sales"];
-                for (var i = 0; i < jsonArrayDatas.Count; i++)
-                {
-                    JObject categoryDetailObject = (JObject)jsonArrayDatas[i];
-                    SQLiteCommand query = new SQLiteCommand("INSERT INTO mhsb_sale (id, proCode, date, sellerId, buyer, amount, price, type)"+
-                        " values (@id,@proCode,@date,@sellerId,@buyer,@amount,@price,@type)", connection);
-                    query.Parameters.AddWithValue("@id", categoryDetailObject["id"]);
-                    query.Parameters.AddWithValue("@proCode", categoryDetailObject["proCode"]);
-                    query.Parameters.AddWithValue("@date", categoryDetailObject["date"]);
-                    query.Parameters.AddWithValue("@sellerId", categoryDetailObject["sellerId"]);
-                    query.Parameters.AddWithValue("@buyer", categoryDetailObject["customer"]);
-                    query.Parameters.AddWithValue("@amount", categoryDetailObject["amount"]);
-                    query.Parameters.AddWithValue("@price", categoryDetailObject["price"]);
-                    query.Parameters.AddWithValue("@type", categoryDetailObject["type"]);
-                    query.ExecuteNonQuery();
-                }
-                connection.Close();
             }
         }
 
@@ -152,19 +156,26 @@ namespace Muhasebe
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
-
-            using (var stream = request.GetRequestStream())
+            try
             {
-                stream.Write(data, 0, data.Length);
+                using (var stream = request.GetRequestStream())
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+                var response = (HttpWebResponse)request.GetResponse();
+
+                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                //Console.WriteLine(responseString);
+                JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
+
+                return json;
+            }catch(WebException error)
+            {
+                MessageBox.Show("Lütfen Internet Bağlantınızı Kontrol ediniz.\n Eğer internet bağlantınızda sorun yok ise, serverla iletişime geçiniz.");
+                Console.WriteLine(error.ToString());
+                return null;
             }
-
-            var response = (HttpWebResponse)request.GetResponse();
-
-            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            //Console.WriteLine(responseString);
-            JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
-
-            return json;
         }
 
         private void btnPurchaseProduct_Click(object sender, EventArgs e)
@@ -262,7 +273,6 @@ namespace Muhasebe
             LoadingForm loadingForm = new LoadingForm();
             loadingForm.Show();
             this.Hide();
-            clearDbTables();
             fillDb();
             MainForm_Activated(null, null);
             loadingForm.Close();

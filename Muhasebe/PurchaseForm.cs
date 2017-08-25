@@ -128,7 +128,7 @@ namespace Muhasebe
                 Console.WriteLine(ex.ToString());
                 MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n Lütfen server bağlanıtınız yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            loadingForm.Close();
+            loadingForm.Hide();
             this.Close();
         }
 
@@ -194,7 +194,7 @@ namespace Muhasebe
                 }
                 else
                 {
-                    loadingForm.Close();
+                    loadingForm.Hide();
                     this.Show();
                     MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
