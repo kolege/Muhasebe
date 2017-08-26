@@ -17,8 +17,7 @@ namespace Muhasebe
         SQLiteConnection connection = MainForm.connection;
         int paymentType;
         List<int> listEmployees=new List<int>();
-        int purchaseId;
-        LoadingForm loadingForm = new LoadingForm();
+        int purchaseId;       
 
         public PurchaseForm()
         {
@@ -128,7 +127,7 @@ namespace Muhasebe
                 Console.WriteLine(ex.ToString());
                 MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n Lütfen server bağlanıtınız yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            loadingForm.Hide();
+            Utils.hide();
             this.Close();
         }
 
@@ -186,7 +185,7 @@ namespace Muhasebe
             if (!string.IsNullOrWhiteSpace(tbtAmount.Text) && !string.IsNullOrWhiteSpace(tbtPrice.Text)
                 && cbProducts.SelectedItem != null && cbEmployee.SelectedItem != null)
             {
-                loadingForm.Show();
+                Utils.show();
                 this.Hide();
                 if (addPurchaseToServer())
                 {
@@ -194,7 +193,7 @@ namespace Muhasebe
                 }
                 else
                 {
-                    loadingForm.Hide();
+                    Utils.hide();
                     this.Show();
                     MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 

@@ -59,7 +59,7 @@
             this.chbUSD.TabIndex = 6;
             this.chbUSD.Text = "USD($)";
             this.chbUSD.UseVisualStyleBackColor = true;
-            this.chbUSD.CheckedChanged += new System.EventHandler(this.chbUSD_Click);
+            this.chbUSD.Click += new System.EventHandler(this.chbUSD_Click);
             // 
             // chbTL
             // 
@@ -74,7 +74,7 @@
             this.chbTL.TabIndex = 5;
             this.chbTL.Text = "TL(₺)";
             this.chbTL.UseVisualStyleBackColor = true;
-            this.chbTL.CheckedChanged += new System.EventHandler(this.chbTL_Click);
+            this.chbTL.Click += new System.EventHandler(this.chbTL_Click);
             // 
             // btnSale
             // 

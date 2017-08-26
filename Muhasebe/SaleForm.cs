@@ -22,7 +22,6 @@ namespace Muhasebe
         List<int> listEmployees = new List<int>();
         List<int> listStocks = new List<int>();
         int saleId;
-        LoadingForm loadingForm = new LoadingForm();
 
         public SaleForm()
         {
@@ -150,7 +149,7 @@ namespace Muhasebe
                 Console.WriteLine(ex.ToString());
                 MessageBox.Show("Veritabanına eklerken bir hata oluştu.\n Lütfen server bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            loadingForm.Close();
+            Utils.hide();
             this.Close();
         }
 
@@ -211,7 +210,7 @@ namespace Muhasebe
                 && !string.IsNullOrWhiteSpace(tbtCustomerName.Text)
                 && cbProducts.SelectedItem != null && cbEmployee.SelectedItem != null)
             {
-                loadingForm.Show();
+                Utils.show();
                 this.Hide();
                 if (addSaleToServer())
                 {
@@ -219,7 +218,7 @@ namespace Muhasebe
                 }
                 else
                 {
-                    loadingForm.Close();
+                    Utils.hide();
                     this.Show();
                     MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }

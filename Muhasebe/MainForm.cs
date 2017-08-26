@@ -214,7 +214,7 @@ namespace Muhasebe
             lvReport.View = View.Details;
             lvReport.FullRowSelect = true;
             lvReport.Columns.Add("Ürün Kodu", 100, HorizontalAlignment.Left);
-            lvReport.Columns.Add("Açıklama", 180, HorizontalAlignment.Left);
+            lvReport.Columns.Add("Açıklama", 340, HorizontalAlignment.Left);
             lvReport.Columns.Add("Miktar", 70, HorizontalAlignment.Left);
             for (int i = 0; i < listProducts.Count; i++)
             {
@@ -256,7 +256,6 @@ namespace Muhasebe
             connection.Close();
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
             MainForm_Activated(null, null);
@@ -270,12 +269,11 @@ namespace Muhasebe
 
         private void btnSyncToServer_Click(object sender, EventArgs e)
         {
-            LoadingForm loadingForm = new LoadingForm();
-            loadingForm.Show();
+            Utils.show();
             this.Hide();
             fillDb();
             MainForm_Activated(null, null);
-            loadingForm.Close();
+            Utils.hide();
             this.Show();
         }
     }

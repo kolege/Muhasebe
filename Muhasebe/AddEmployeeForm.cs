@@ -19,7 +19,6 @@ namespace Muhasebe
     {
         SQLiteConnection connection;
         int employeeID;
-        LoadingForm loadingForm = new LoadingForm();
 
 
         public AddEmployeeForm()
@@ -33,7 +32,7 @@ namespace Muhasebe
             if(!string.IsNullOrWhiteSpace(tbtName.Text) && !string.IsNullOrWhiteSpace(tbtSurname.Text))
             {
                 this.Hide();
-                loadingForm.Show();
+                Utils.show();
                 if(addEmloyeeToServer(tbtName.Text.ToString(), tbtSurname.Text.ToString()))
                 {
                     addEmployeeToLocalDb();
@@ -41,8 +40,8 @@ namespace Muhasebe
                 else
                 {
                     this.Show();
-                    loadingForm.Close();
-                    MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.");
+                    Utils.hide() ;
+                    MessageBox.Show("İnternet Bağlantınız olduğundan emin olunuz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
 
@@ -106,14 +105,14 @@ namespace Muhasebe
                 query.ExecuteNonQuery();
                 query.Dispose();
                 connection.Close();
-                loadingForm.Close();
+                Utils.hide();
                 this.Close();
             }
             catch (SQLiteException error)
             {
                 connection.Close();
                 Console.WriteLine(error.ToString());
-                loadingForm.Close();
+                Utils.hide();
                 MessageBox.Show("Verileri eklerken hata oluştu. Lütfen serverla bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Close();
             }

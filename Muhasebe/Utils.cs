@@ -10,5 +10,18 @@ namespace Muhasebe
     {
         public static int paymentTypeTL=1;
         public static int paymentTypeUSD = 2;
+
+        static LoadingForm loadingForm = new LoadingForm();
+
+        public static void show()
+        {
+            loadingForm.Show();
+        }
+
+        public static void hide()
+        {
+            loadingForm.Hide();
+        }
+
     }
 }

@@ -52,7 +52,7 @@
             this.elemenaToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(618, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(757, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -122,9 +122,9 @@
             // lvReport
             // 
             this.lvReport.Location = new System.Drawing.Point(243, 26);
-            this.lvReport.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lvReport.Margin = new System.Windows.Forms.Padding(2);
             this.lvReport.Name = "lvReport";
-            this.lvReport.Size = new System.Drawing.Size(364, 494);
+            this.lvReport.Size = new System.Drawing.Size(503, 494);
             this.lvReport.TabIndex = 16;
             this.lvReport.UseCompatibleStateImageBehavior = false;
             // 
@@ -173,7 +173,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(618, 531);
+            this.ClientSize = new System.Drawing.Size(757, 531);
             this.Controls.Add(this.btnSyncToServer);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);

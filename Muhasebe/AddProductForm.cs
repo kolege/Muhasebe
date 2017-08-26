@@ -21,7 +21,6 @@ namespace Muhasebe
         string proCode, proDetail;
         byte[] proImage;
         bool boolImageSelected = false;
-        LoadingForm loadingForm = new LoadingForm();
 
         public AddProductForm()
         {
@@ -32,12 +31,12 @@ namespace Muhasebe
         {
             if (!string.IsNullOrWhiteSpace(tbtProductCode.Text) && !string.IsNullOrWhiteSpace(tbtProductDetail.Text) && boolImageSelected)
             {
-                loadingForm.Show();
+                Utils.show();
                 this.Hide();
                 if (addProductToServer())
                     addProductToLocalDb();
                 else {
-                    loadingForm.Close();
+                    Utils.hide();
                     this.Show();
                     MessageBox.Show("İnternet bağlantınızı kontrol ediniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -115,7 +114,7 @@ namespace Muhasebe
                 query.ExecuteNonQuery();
                 query.Dispose();
                 connection.Close();
-                loadingForm.Close();
+                Utils.hide();
                 this.Close();
             }
             catch (SQLiteException ex)
@@ -123,7 +122,7 @@ namespace Muhasebe
                 connection.Close();
                 Console.WriteLine(ex.ToString());
                 this.Show();
-                loadingForm.Close();
+                Utils.hide();
                 MessageBox.Show("Verileri eklerken hata oluştu. Lütfen serverla bağlantınızı yenileyiniz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
