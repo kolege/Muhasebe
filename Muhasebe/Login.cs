@@ -24,6 +24,7 @@ namespace Muhasebe
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Utils.show();
             String mail=tctEmail.Text;
             String pw = tctPassword.Text;
             var request = (HttpWebRequest)WebRequest.Create("http://www.stokcontrol.com/login.php");
@@ -49,17 +50,21 @@ namespace Muhasebe
                 JObject json = JsonConvert.DeserializeObject<JObject>(responseString);
                 if ((int)json["response"]["success"]==1)
                 {
+                    Utils.hide();
+                    this.Hide();
                     MainForm form2 = new MainForm();
                     form2.Show();
-                    this.Hide();
+                    
                 }
                 else
                 {
+                    Utils.hide();
                     lblError.Show();
                     lblError.Text = json["response"]["message"].ToString();
                 }
             }catch(WebException error)
             {
+                Utils.hide();
                 MessageBox.Show("Lütfen Internet Bağlantınızı Kontrol ediniz.\n Eğer internet bağlantınızda sorun yok ise, serverla iletişime geçiniz.");
                 Console.WriteLine(error.ToString());
             }

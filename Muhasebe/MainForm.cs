@@ -256,7 +256,7 @@ namespace Muhasebe
             connection.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSearch_Click(object sender, EventArgs e)
         {
             MainForm_Activated(null, null);
         }
@@ -275,6 +275,14 @@ namespace Muhasebe
             MainForm_Activated(null, null);
             Utils.hide();
             this.Show();
+        }
+
+        private void tbtProCode_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSearch_Click(this, new EventArgs());
+            }
         }
     }
 }
