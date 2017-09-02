@@ -276,7 +276,12 @@ namespace Muhasebe
             iTextSharp.text.Document pdfFile = new iTextSharp.text.Document();
             try
             {
-                PdfWriter.GetInstance(pdfFile, new FileStream(path + "\\" + cbProducts.SelectedItem + ".pdf", FileMode.Create));
+                path += "\\";
+                if (cbProducts.SelectedIndex != -1)
+                    path += cbProducts.SelectedItem.ToString();
+                if (cbEmployee.SelectedIndex != -1 && cbProducts.SelectedIndex == -1)
+                    path += " / "+cbEmployee.SelectedItem.ToString();
+                PdfWriter.GetInstance(pdfFile, new FileStream(path + ".pdf", FileMode.Create));
                 pdfFile.Open();
 
                 #region Fatura oluşturan bilgileri
@@ -380,7 +385,7 @@ namespace Muhasebe
                 pdfFile.Add(pdfTableBottom);
                 pdfFile.Close();
                 #endregion
-                System.Diagnostics.Process.Start("explorer.exe", path + "\\" + cbProducts.Text + ".pdf");
+                System.Diagnostics.Process.Start("explorer.exe", path+".pdf");
             }
             catch (IOException e)
             {
@@ -400,7 +405,10 @@ namespace Muhasebe
 
         private void btnCreateReport_Click(object sender, EventArgs e)
         {
-            createBill();
+            if (listDeals.Count != 0)
+                createBill();
+            else
+                MessageBox.Show("Raporlanacak veri bulunamadı.Lütfen kriterlerinizi kontrol ediniz.");
         }
 
     }
