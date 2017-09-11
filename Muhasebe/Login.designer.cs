@@ -53,9 +53,9 @@
             this.label1.Location = new System.Drawing.Point(58, 147);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
+            this.label1.Size = new System.Drawing.Size(64, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "E-Mail";
+            this.label1.Text = "Kullanıcı Adı";
             // 
             // label2
             // 
@@ -74,7 +74,6 @@
             this.tctEmail.Name = "tctEmail";
             this.tctEmail.Size = new System.Drawing.Size(76, 20);
             this.tctEmail.TabIndex = 0;
-            this.tctEmail.Text = "admin";
             // 
             // tctPassword
             // 
@@ -84,7 +83,6 @@
             this.tctPassword.PasswordChar = '*';
             this.tctPassword.Size = new System.Drawing.Size(76, 20);
             this.tctPassword.TabIndex = 1;
-            this.tctPassword.Text = "admin";
             // 
             // lblError
             // 
